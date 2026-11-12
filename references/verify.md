@@ -1,6 +1,6 @@
 # Verifying
 
-Check what the person will check — motion frame by frame and detail at zoom — before
+Check what the person will check ,  motion frame by frame and detail at zoom ,  before
 showing them anything.
 
 ## 1. Types and build
@@ -15,7 +15,7 @@ npm run build         # vite build
 Load the page with `?debug`. `run()` then skips rAF and exposes `window.__step(s)`,
 which advances in exact 1/60 s steps. Background tabs, embedded preview panes and
 headless browsers throttle rAF to a frame or two per second, which makes everything
-crawl and can make a working scene look broken — always check in debug mode.
+crawl and can make a working scene look broken ,  always check in debug mode.
 
 `?t=1.25` freezes a normal page at one moment.
 

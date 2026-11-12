@@ -15,7 +15,7 @@ ffprobe -v error -select_streams v -show_entries stream=r_frame_rate,avg_frame_r
 If `nb_frames / duration` isn't `r_frame_rate`, the clip is variable-frame-rate (most
 social clips are). Resample by time (`-vf fps=30`) everywhere and index by time.
 ffmpeg's `trim=start_frame` and `select='…n…'` count decoded frames, and `-f rawvideo`
-pads to the nominal rate — mixing those once doubled a walk's speed.
+pads to the nominal rate ,  mixing those once doubled a walk's speed.
 
 ## 1. Loop lengths
 

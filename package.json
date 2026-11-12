@@ -1,9 +1,9 @@
 {
   "name": "line-art-animation",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "A Claude skill and small TypeScript library for animated line-art SVG components.",
+  "description": "An AI agent skill and lightweight TypeScript library for animated line-art SVG components.",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
@@ -12,8 +12,8 @@
     "capture": "node scripts/capture.ts"
   },
   "devDependencies": {
-    "@types/node": "^22.18.0",
-    "typescript": "^5.9.3",
-    "vite": "^7.1.9"
+    "@types/node": "^22.14.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7"
   }
 }

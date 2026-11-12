@@ -22,10 +22,10 @@ Layer order, back to front:
 2. behind-buildings (trees whose canopies rise above roofs, chimneys, wires, birds on wires)
 3. buildings
 4. street (paper fill), street furniture, a cat on a bench
-5. walkers — re-sorted every frame by their ground y
+5. walkers ,  re-sorted every frame by their ground y
 6. foreground (water, a boat, a willow on the near bank)
 7. airborne particles (petals) with `pointer-events: none`
-8. glow layer: `mix-blend-mode: screen; pointer-events: none` — all light lives here
+8. glow layer: `mix-blend-mode: screen; pointer-events: none` ,  all light lives here
 9. hit areas for small targets
 
 Put `inkDefs().filter` on the scene group, not the sky or glow.
@@ -56,7 +56,7 @@ already on screen so the scene is never empty. Remove them when off-screen.
 ## Wind
 
 `pointerWind(svg)` gives a smoothed value from pointer speed plus a slow breeze. Feed
-it to everything that hangs or floats — curtains, lanterns, chimes, petals, smoke,
+it to everything that hangs or floats ,  curtains, lanterns, chimes, petals, smoke,
 willow strands, water strokes, clouds.
 
 ## Interactions

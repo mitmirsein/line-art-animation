@@ -4,7 +4,7 @@ Animation here is mechanics first: solve where the body has to be, then draw aro
 it. Free-running sines look procedural immediately; every rejected version of a walk
 had one.
 
-## Walking and running — `gait()`
+## Walking and running ,  `gait()`
 
 ```ts
 import { gait } from '../lib/gait.ts';
@@ -18,7 +18,7 @@ const p = walk.pose(phase, go);                // hip, feet[0..1] {ankle, knee, 
 
 What it does, so you can extend it rather than replace it:
 
-- **Planted foot** slides back under the hip at `stride / (duty × period)` — the travel
+- **Planted foot** slides back under the hip at `stride / (duty × period)` ,  the travel
   speed. Move by anything else and feet skate.
 - **Swing** follows a minimum-jerk curve with a low lift (walk 3.4, geta 2.4); runs add
   a heel kick and a high, early lift.
@@ -50,7 +50,7 @@ the legs through springs, sleeves and bags hang on springs/pendulums.
   while the tip stays put (the pole leans back), lift it out, swing it forward. The
   boat's speed follows the push, not a constant.
 
-## Things that hang or trail — springs and pendulums
+## Things that hang or trail ,  springs and pendulums
 
 ```ts
 const sleeve = spring(40, 6);                 // stiffness, damping
@@ -71,7 +71,7 @@ every few seconds, an ear twitch, birds that hop, turn, preen at random interval
 (1–4 s), smoke puffs, water strokes drifting, stars twinkling. Randomise intervals,
 not shapes.
 
-## Gestures and reactions — keyed poses
+## Gestures and reactions ,  keyed poses
 
 For interactions, key a few poses and blend between them over time
 (`sequence([['sit', 0.7], ['yawn', 0.9], ['stretch', 1.5], …])`, `curve()` for single
@@ -81,4 +81,4 @@ channels). Ease each transition. Stop walking before gesturing (blend `go` to 0 
 ## Time compression
 
 If a scene runs a day in 30 s, people still walk at natural speed. Compress what can
-be compressed without looking fake — how often people arrive, the sky, the lights.
+be compressed without looking fake ,  how often people arrive, the sky, the lights.
