@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주일 아침, 교회로 예배하러 가는 사람들 — Line-art Animation</title>
+  <meta name="description" content="성경책을 품에 안은 청년, 손잡고 걷는 모자, 고요한 종탑과 십자가로 이어지는 아침 선화 애니메이션">
+  <meta property="og:title" content="주일 아침, 예배로 향하는 발걸음">
+  <meta property="og:description" content="성경책을 품에 안은 청년, 손잡고 걷는 모자, 고요한 종탑과 십자가로 이어지는 아침 선화 애니메이션">
+  <meta property="og:image" content="https://kerygma.co.kr/church-walk/og-image.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="주일 아침, 예배로 향하는 발걸음">
+  <meta name="twitter:description" content="성경책을 품에 안은 청년, 손잡고 걷는 모자, 고요한 종탑과 십자가로 이어지는 아침 선화 애니메이션">
+  <meta name="twitter:image" content="https://kerygma.co.kr/church-walk/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f2eb;
+      --card-border: #dcd6c8;
+      --card-shadow: rgba(0, 0, 0, 0.06);
+      --text: #2d3139;
+      --text-muted: #64748b;
+      --accent: #b45309;
+      --paper: #fdfcf8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      overflow-x: hidden;
+    }
+
+    .editorial-container {
+      width: 100%;
+      max-width: 980px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    header.header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 12px;
+      word-break: keep-all;
+    }
+
+    .title-group h1 {
+      font-family: 'Noto Serif KR', Georgia, serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+
+    .title-group p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .badge-time {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      background: #e2ddd3;
+      padding: 4px 10px;
+      border-radius: 4px;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    /* Animation Card */
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      box-shadow: 0 4px 20px var(--card-shadow);
+      overflow: hidden;
+      position: relative;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    svg.church-walk {
+      display: block;
+      width: 100%;
+      height: auto;
+      cursor: crosshair;
+      color: #1c1c1c;
+      --paper: #fdfcf8;
+      transition: color 0.4s ease;
+    }
+
+    svg.church-walk .pp {
+      fill: var(--paper);
+    }
+
+    /* Controls Bar */
+    .controls {
+      background: #faf8f5;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      padding: 12px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    button.btn {
+      background: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #334155;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    button.btn:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+      color: #0f172a;
+    }
+
+    button.btn.active {
+      background: #1e293b;
+      border-color: #1e293b;
+      color: #ffffff;
+    }
+
+    button.btn-primary {
+      background: #d97706;
+      border-color: #b45309;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    button.btn-primary:hover {
+      background: #b45309;
+    }
+
+    .slider-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: #475569;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 140px;
+      height: 4px;
+      background: #cbd5e1;
+      border-radius: 2px;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #475569;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      background: #0f172a;
+    }
+
+    .info-footer {
+      font-size: 12px;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 4px;
+      line-height: 1.6;
+    }
+
+    .hint-chip {
+      background: #e2e8f0;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      color: #475569;
+    }
+
+    /* Capture mode for video recording */
+    body.capture {
+      padding: 32px 40px;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--bg);
+    }
+    body.capture .controls,
+    body.capture .info-footer {
+      display: none !important;
+    }
+    body.capture .editorial-container {
+      max-width: 1540px;
+      width: 86vw;
+    }
+    body.capture .header h1 {
+      font-size: 28px;
+    }
+    body.capture .header p {
+      font-size: 16px;
+    }
+    body.capture .time-badge {
+      font-size: 15px;
+      padding: 6px 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="editorial-container">
+  <header class="header">
+    <div class="title-group">
+      <h1>주일 아침, 예배로 향하는 발걸음</h1>
+      <p>성경책을 품에 안은 청년, 손잡고 걷는 모자, 고요한 종탑과 십자가로 이어지는 아침 선화 애니메이션</p>
+    </div>
+    <div class="badge-time" id="timeLabel">09:00 AM · 주일 아침</div>
+  </header>
+
+  <div class="card" id="card">
+    <div id="stage"></div>
+  </div>
+
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn" id="btnDawn" data-tau="0.23">🌅 새벽 기도 (06:00)</button>
+      <button class="btn active" id="btnMorning" data-tau="0.33">☀️ 1부 예배 (09:00)</button>
+      <button class="btn" id="btnNoon" data-tau="0.48">🌤️ 2부 예배 (11:00)</button>
+      <button class="btn" id="btnDusk" data-tau="0.76">🌆 저녁 찬양 (18:00)</button>
+      <button class="btn" id="btnAutoCycle">🔄 하루 순환 (24초)</button>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" id="btnChime">🔔 교회 종 울리기</button>
+      <button class="btn" id="btnPlayPause">⏸️ 일시정지</button>
+    </div>
+
+    <div class="slider-group">
+      <span>시간 흐름</span>
+      <input type="range" id="timeSlider" min="0" max="1" step="0.005" value="0.33">
+    </div>
+  </div>
+
+  <div class="info-footer">
+    <div>
+      <span class="hint-chip">상호작용</span>
+      마우스 커서를 움직이면 바람이 불어 목도리와 성경 가름끈이 흩날립니다. 교회 종탑이나 인물을 클릭해 보십시오.
+    </div>
+    <div>60 FPS · SVG Pure IK Gait & Spring Physics</div>
+  </div>
+</div>
+
+<script type="module">
+// ============================================================================
+// 1. Core Mathematical Library: Ink, Gait, Motion, DayNight (Zero Dependencies)
+// ============================================================================
+
+const NS = 'http://www.w3.org/2000/svg';
+const PAPER_DAY = '#fdfdfc';
+const INK_DAY = '#1c1c1c';
+const INK_LIGHT = '#efe6cf';
+const PEN = 1.35;
+
+const f = (n) => Number(n).toFixed(2);
+const pt = (p) => `${f(p[0])} ${f(p[1])}`;
+
+function el(tag, attrs = {}, parent = null) {
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, String(attrs[k]));
+  if (attrs.fill === PAPER_DAY) n.classList.add('pp');
+  if (parent) parent.appendChild(n);
+  return n;
+}
+
+const pen = (parent, w = PEN) =>
+  el('path', { fill: 'none', stroke: 'currentColor', 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, parent);
+
+const shape = (parent, w = PEN) =>
+  el('path', { fill: PAPER_DAY, stroke: 'currentColor', 'stroke-width': w, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, parent);
+
+const blot = (parent) => el('path', { fill: 'currentColor' }, parent);
+
+const paint = (parent, colour, w = PEN) =>
+  el('path', { fill: colour, stroke: 'currentColor', 'stroke-width': w, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, parent);
+
+function limb(parent, width, w = PEN) {
+  const g = el('g', {}, parent);
+  const fill = el('path', { fill: PAPER_DAY }, g);
+  fill.classList.add('pp');
+  const a = pen(g, w), b = pen(g, w);
+  const half = (width - w) / 2;
+  return {
+    g,
+    draw(joints, endGap = [0.4, 0.9]) {
+      const s = joints[0], e = joints[joints.length - 1];
+      let c = [(s[0] + e[0]) / 2, (s[1] + e[1]) / 2];
+      if (joints.length === 3) {
+        const m = joints[1];
+        c = [m[0] + 0.55 * (m[0] - c[0]), m[1] + 0.55 * (m[1] - c[1])];
+      }
+      const P = [];
+      for (let i = 0; i <= 16; i++) {
+        const t = i / 16, u = 1 - t;
+        P.push([u * u * s[0] + 2 * u * t * c[0] + t * t * e[0], u * u * s[1] + 2 * u * t * c[1] + t * t * e[1]]);
+      }
+      const side = (sgn) => P.map((p, i) => {
+        const q = P[Math.min(P.length - 1, i + 1)], o = P[Math.max(0, i - 1)];
+        const dx = q[0] - o[0], dy = q[1] - o[1], l = Math.hypot(dx, dy) || 1;
+        return [p[0] - (dy / l) * half * sgn, p[1] + (dx / l) * half * sgn];
+      });
+      const L = side(1), R = side(-1);
+      fill.setAttribute('d', 'M' + L.map(pt).join('L') + 'L' + R.slice().reverse().map(pt).join('L') + 'Z');
+      const cut = (arr, gap) => arr.slice(0, Math.max(2, arr.length - Math.round(gap * 2)));
+      a.setAttribute('d', 'M' + cut(L, endGap[0]).map(pt).join('L'));
+      b.setAttribute('d', 'M' + cut(R, endGap[1]).map(pt).join('L'));
+    },
+  };
+}
+
+function shoe(node, ankle, toe = 0) {
+  const r = (toe * Math.PI) / 180, c = Math.cos(r), s = Math.sin(r);
+  const S = (x, y) => [ankle[0] + x * c - y * s, ankle[1] + x * s + y * c];
+  node.setAttribute('d', `M${pt(S(-1.6, -0.6))} L${pt(S(4.6, -0.2))} Q${pt(S(6.6, 0.4))} ${pt(S(5.6, 1.6))} L${pt(S(-1.4, 1.5))} Q${pt(S(-2.2, 0.5))} ${pt(S(-1.6, -0.6))}Z`);
+}
+
+const place = (g, x, y, dir = 1, s = 0.5) =>
+  g.setAttribute('transform', `translate(${f(x)} ${f(y)}) scale(${f(dir * s)} ${f(s)}) translate(-40 -120)`);
+
+function inkDefs(svg, id = 'ink') {
+  svg.style.color = INK_DAY;
+  const defs = el('defs', {}, svg);
+  const fil = el('filter', { id, x: '-8%', y: '-8%', width: '116%', height: '116%' }, defs);
+  el('feTurbulence', { type: 'fractalNoise', baseFrequency: '0.04', numOctaves: '2', result: 'turb' }, fil);
+  el('feDisplacementMap', { in: 'SourceGraphic', in2: 'turb', scale: '0.8', xChannelSelector: 'R', yChannelSelector: 'G' }, fil);
+  return { defs, filter: `url(#${id})` };
+}
+
+// ----------------------------------------------------------------------------
+// Gait Inverse Kinematics Engine
+// ----------------------------------------------------------------------------
+function gait(opts = {}) {
+  const kind = opts.kind || 'walk';
+  const defaults = kind === 'run'
+    ? { period: 0.68, duty: 0.38, stride: 34, lift: 7.2, heelOff: 28, heelKick: 14 }
+    : kind === 'shuffle'
+    ? { period: 0.82, duty: 0.68, stride: 16, lift: 2.4, heelOff: 14, heelKick: 0 }
+    : { period: 1.05, duty: 0.62, stride: 24, lift: 3.4, heelOff: 18, heelKick: 0 };
+
+  const cfg = {
+    period: opts.period ?? defaults.period,
+    duty: opts.duty ?? defaults.duty,
+    stride: opts.stride ?? defaults.stride,
+    lift: opts.lift ?? defaults.lift,
+    heelOff: opts.heelOff ?? defaults.heelOff,
+    heelKick: opts.heelKick ?? defaults.heelKick,
+    thigh: opts.thigh ?? 20,
+    shin: opts.shin ?? 20,
+    ankleY: opts.ankleY ?? 118.4,
+    ground: opts.ground ?? 120,
+    toe: opts.toe ?? 5.2,
+  };
+
+  const speed = cfg.stride / (cfg.duty * cfg.period);
+
+  function solveLeg(aX, aY, standY) {
+    const hipX = 40, hipY = standY - (cfg.thigh + cfg.shin);
+    const dx = aX - hipX, dy = aY - hipY;
+    const d = Math.min(Math.hypot(dx, dy), cfg.thigh + cfg.shin - 0.05);
+    const th = Math.atan2(dy, dx);
+    const al = Math.acos(Math.max(-1, Math.min(1, (cfg.thigh * cfg.thigh + d * d - cfg.shin * cfg.shin) / (2 * cfg.thigh * d))));
+    return [hipX + cfg.thigh * Math.cos(th + al), hipY + cfg.thigh * Math.sin(th + al)];
+  }
+
+  return {
+    ...cfg,
+    speed,
+    pose(phase, go = 1) {
+      phase = ((phase % 1) + 1) % 1;
+      const swingDur = 1 - cfg.duty;
+      const feet = [0, 1].map((idx) => {
+        const ph = ((phase + idx * 0.5) % 1 + 1) % 1;
+        let ax, ay, pitch = 0, stance = true;
+        if (ph < cfg.duty) {
+          const u = ph / cfg.duty;
+          ax = 40 + (cfg.stride / 2) - u * cfg.stride;
+          ay = cfg.ankleY;
+          if (u > 0.85) {
+            const peel = (u - 0.85) / 0.15;
+            pitch = peel * cfg.heelOff;
+            ax += Math.sin((pitch * Math.PI) / 180) * cfg.toe * 0.4;
+            ay -= (1 - Math.cos((pitch * Math.PI) / 180)) * cfg.toe * 0.3;
+          }
+        } else {
+          stance = false;
+          const u = (ph - cfg.duty) / swingDur;
+          const sCurve = u * u * (3 - 2 * u);
+          ax = 40 - (cfg.stride / 2) + sCurve * cfg.stride;
+          const h = Math.sin(u * Math.PI);
+          ay = cfg.ankleY - h * cfg.lift;
+          pitch = (1 - u) * cfg.heelOff * 0.5;
+        }
+        ax = 40 + (ax - 40) * go;
+        ay = cfg.ground - (cfg.ground - ay) * go;
+        const knee = solveLeg(ax, ay, cfg.ground);
+        return { ankle: [ax, ay], knee, pitch, stance };
+      });
+
+      const hipY = cfg.ground - (cfg.thigh + cfg.shin) + (Math.sin(phase * 4 * Math.PI) * 1.2 * go);
+      const bob = (hipY - (cfg.ground - (cfg.thigh + cfg.shin)));
+      const front = feet[0].ankle[0] > feet[1].ankle[0] ? 0 : 1;
+      return { hip: [40, hipY], feet, front, bob };
+    }
+  };
+}
+
+// ----------------------------------------------------------------------------
+// Physics Springs & Math Helpers
+// ----------------------------------------------------------------------------
+const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+
+function spring(k = 45, c = 7) {
+  let val = 0, vel = 0;
+  return {
+    step(target, dt) {
+      dt = Math.min(dt, 0.05);
+      const force = -k * (val - target) - c * vel;
+      vel += force * dt;
+      val += vel * dt;
+      return val;
+    },
+    get val() { return val; }
+  };
+}
+
+function pendulum(w = 12, gamma = 1.8) {
+  let angle = 0, vel = 0;
+  return {
+    step(drive, dt) {
+      dt = Math.min(dt, 0.05);
+      const force = -w * Math.sin(angle) - gamma * vel + drive;
+      vel += force * dt;
+      angle += vel * dt;
+      return angle;
+    }
+  };
+}
+
+// ----------------------------------------------------------------------------
+// Day/Night Palette Ramps
+// ----------------------------------------------------------------------------
+const toRGB = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const rgb = (c) => `rgb(${Math.round(c[0])},${Math.round(c[1])},${Math.round(c[2])})`;
+const mixRGB = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+
+const SKY_RAMP = [
+  [0.0, '#0c1322', '#1a2240'],
+  [0.22, '#2d3356', '#d9977a'], // Dawn
+  [0.33, '#e8ebed', '#fbebe1'], // Sunday 9am (Morning peach gold)
+  [0.50, '#f2f2ef', '#faf8f3'], // Midday
+  [0.74, '#b4856b', '#f59e0b'], // Sunset
+  [0.78, '#3b385c', '#834c56'], // Twilight
+  [0.86, '#0f172a', '#1e293b']  // Night
+];
+
+function getPalette(tau) {
+  tau = ((tau % 1) + 1) % 1;
+  let idx = 0;
+  for (let i = 0; i < SKY_RAMP.length; i++) {
+    if (SKY_RAMP[i][0] <= tau) idx = i;
+  }
+  const nextIdx = (idx + 1) % SKY_RAMP.length;
+  const p0 = SKY_RAMP[idx], p1 = SKY_RAMP[nextIdx];
+  const span = (p1[0] > p0[0] ? p1[0] : p1[0] + 1) - p0[0];
+  const t = (tau < p0[0] ? tau + 1 - p0[0] : tau - p0[0]) / span;
+
+  const top = mixRGB(toRGB(p0[1]), toRGB(p1[1]), t);
+  const bottom = mixRGB(toRGB(p0[2]), toRGB(p1[2]), t);
+
+  const isNight = tau < 0.22 || tau > 0.77;
+  const duskT = clamp((tau - 0.73) / 0.05, 0, 1) - clamp((tau - 0.82) / 0.05, 0, 1);
+  const paper = isNight ? mixRGB(toRGB('#1a2138'), toRGB('#242b45'), 0.5) : toRGB('#fdfcf8');
+  const ink = isNight ? toRGB(INK_LIGHT) : toRGB(INK_DAY);
+  const windowLamp = isNight ? 1 : clamp((tau - 0.72) / 0.04, 0, 1);
+
+  return { top, bottom, paper, ink, windowLamp, isNight };
+}
+
+// ============================================================================
+// 2. Synthesized Church Bell Sound (Web Audio API)
+// ============================================================================
+let audioCtx = null;
+function playChurchBell() {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    const t = audioCtx.currentTime;
+    const baseFreq = 440; // A4 Church Bell
+    const partials = [
+      { ratio: 0.5, gain: 0.45, decay: 4.2 },  // Hum
+      { ratio: 1.0, gain: 0.75, decay: 3.5 },  // Prime
+      { ratio: 1.19, gain: 0.65, decay: 3.0 }, // Tierce (Minor 3rd)
+      { ratio: 1.51, gain: 0.55, decay: 2.8 }, // Quint
+      { ratio: 2.0, gain: 0.35, decay: 2.2 },  // Nominal
+      { ratio: 2.74, gain: 0.25, decay: 1.6 }, // Supernominal
+    ];
+
+    partials.forEach((p) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(baseFreq * p.ratio, t);
+
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(p.gain * 0.25, t + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + p.decay);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(t);
+      osc.stop(t + p.decay + 0.1);
+    });
+  } catch (err) {
+    console.warn('Audio Context failed:', err);
+  }
+}
+
+// ============================================================================
+// 3. Scene Construction: The Church, Landscape, Walkers
+// ============================================================================
+
+const W = 960, H = 480, GROUND = 396;
+const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'church-walk', role: 'img' });
+const { defs, filter } = inkDefs(svg, 'ink');
+document.querySelector('#stage').appendChild(svg);
+
+// Sky & Gradients
+const skyGrad = el('linearGradient', { id: 'skyGrad', x1: '0', y1: '0', x2: '0', y2: '1' }, defs);
+const skyStopTop = el('stop', { offset: '0%' }, skyGrad);
+const skyStopBottom = el('stop', { offset: '100%' }, skyGrad);
+const skyRect = el('rect', { width: W, height: H, fill: 'url(#skyGrad)' }, svg);
+
+// Scene Container with ink filter
+const scene = el('g', { filter }, svg);
+const back = el('g', {}, scene);
+const mid = el('g', {}, scene);
+const fore = el('g', {}, scene);
+const glowLayer = el('g', { style: 'mix-blend-mode: screen; pointer-events: none;' }, svg);
+
+// ----------------------------------------------------------------------------
+// A. Landscape (Stone Path, Trees, Distant Hills, Clouds, Morning Sun)
+// ----------------------------------------------------------------------------
+// Morning Sun disk & subtle rays
+const sunG = el('g', { opacity: '0.85' }, back);
+const sunDisk = el('circle', { cx: '180', cy: '130', r: '28', fill: '#fef3c7', stroke: 'currentColor', 'stroke-width': '0.7', opacity: '0.9' }, sunG);
+
+// Night celestial objects (Stars & Crescent Moon)
+const starsG = el('g', { opacity: '0' }, back);
+const starCoords = [[60, 60], [120, 85], [190, 50], [280, 95], [360, 55], [440, 80], [530, 45], [610, 70], [740, 65], [830, 85]];
+const starNodes = starCoords.map(([sx, sy]) => el('circle', { cx: String(sx), cy: String(sy), r: '1.4', fill: '#fef9c3' }, starsG));
+
+const moonG = el('g', { opacity: '0' }, back);
+const moon = paint(moonG, '#fef3c7', 0.8);
+moon.setAttribute('d', 'M215 75 Q232 92 215 112 Q240 102 238 82 Q230 73 215 75Z');
+// Wispy morning clouds (2 organic clouds)
+pen(back, 0.7).setAttribute('d', 'M80 90 Q120 78 170 85 T250 82 M100 96 Q140 88 190 94 T240 92');
+pen(back, 0.6).setAttribute('d', 'M380 110 Q430 98 490 106 T580 104 M410 116 Q460 108 520 114 T570 112');
+
+// Distant hills with gentle contours
+pen(back, 0.9).setAttribute('d', 'M0 325 Q220 290 460 312 T960 295');
+pen(back, 0.55).setAttribute('d', 'M100 338 Q340 312 580 328 T960 320');
+
+// Low stone wall along the pathway (x: 0 to 560)
+shape(back, 0.9).setAttribute('d', 'M0 368 L560 368 L560 395 L0 395Z');
+pen(back, 0.6).setAttribute('d', 'M0 368 L560 368');
+// Vertical mortar joints on stone wall
+for (let wx = 18; wx < 550; wx += 28 + (wx % 7)) {
+  pen(back, 0.45).setAttribute('d', `M${wx} 368 L${wx} 394`);
+  if (wx % 56 === 0) {
+    pen(back, 0.4).setAttribute('d', `M${wx - 14} 381 L${wx + 14} 381`);
+  }
+}
+
+// Paved Road & Cobblestones
+pen(mid, 1.3).setAttribute('d', `M0 ${GROUND} L${W} ${GROUND} M0 ${GROUND + 14} L${W} ${GROUND + 14}`);
+// Cobblestone paving rhythm
+for (let i = 0; i < 48; i++) {
+  const x = i * 20 + 8;
+  pen(mid, 0.5).setAttribute('d', `M${x} ${GROUND + 1} l2 12`);
+}
+// Grass tufts along roadside
+[40, 95, 160, 230, 310, 385, 470, 535].forEach((gx) => {
+  pen(mid, 0.6).setAttribute('d', `M${gx} ${GROUND} Q${gx - 3} ${GROUND - 8} ${gx - 5} ${GROUND - 12} M${gx} ${GROUND} Q${gx + 2} ${GROUND - 9} ${gx + 4} ${GROUND - 14} M${gx} ${GROUND} Q${gx + 5} ${GROUND - 7} ${gx + 8} ${GROUND - 10}`);
+});
+
+// Organic Ink Trees (풍성한 아침 느티나무와 단풍나무)
+function drawTree(parent, tx, ty, scale = 1) {
+  const tG = el('g', {}, parent);
+  // Trunk with bark lines
+  shape(tG, 1.2).setAttribute('d', `M${tx - 7 * scale} ${GROUND} Q${tx - 3 * scale} ${ty + 45} ${tx - 2 * scale} ${ty} Q${tx + 5 * scale} ${ty + 40} ${tx + 7 * scale} ${GROUND}Z`);
+  pen(tG, 0.5).setAttribute('d', `M${tx - 2 * scale} ${GROUND} Q${tx} ${ty + 50} ${tx - 1 * scale} ${ty + 20}`);
+  // Main boughs
+  pen(tG, 0.85).setAttribute('d', `M${tx - 2 * scale} ${ty + 25} Q${tx - 26 * scale} ${ty + 8} ${tx - 40 * scale} ${ty - 10}`);
+  pen(tG, 0.85).setAttribute('d', `M${tx + 3 * scale} ${ty + 18} Q${tx + 30 * scale} ${ty + 2} ${tx + 45 * scale} ${ty - 18}`);
+  pen(tG, 0.7).setAttribute('d', `M${tx - 18 * scale} ${ty + 8} Q${tx - 24 * scale} ${ty - 8} ${tx - 32 * scale} ${ty - 24}`);
+  pen(tG, 0.7).setAttribute('d', `M${tx + 22 * scale} ${ty + 4} Q${tx + 32 * scale} ${ty - 10} ${tx + 38 * scale} ${ty - 30}`);
+
+  // Scalloped cloud canopy (자연스러운 펜선 구름 형태)
+  const canopy = shape(tG, 1.15);
+  canopy.setAttribute('d', `M${tx - 48 * scale} ${ty + 5} ` +
+    `Q${tx - 65 * scale} ${ty - 15 * scale} ${tx - 55 * scale} ${ty - 38 * scale} ` +
+    `Q${tx - 50 * scale} ${ty - 60 * scale} ${tx - 25 * scale} ${ty - 68 * scale} ` +
+    `Q${tx} ${ty - 82 * scale} ${tx + 28 * scale} ${ty - 68 * scale} ` +
+    `Q${tx + 58 * scale} ${ty - 55 * scale} ${tx + 55 * scale} ${ty - 30 * scale} ` +
+    `Q${tx + 65 * scale} ${ty - 5 * scale} ${tx + 45 * scale} ${ty + 12 * scale} ` +
+    `Q${tx + 20 * scale} ${ty + 22 * scale} ${tx - 20 * scale} ${ty + 20 * scale}Z`);
+
+  // Internal leaf scallops (먹선 잎사귀 결)
+  pen(tG, 0.5).setAttribute('d', `M${tx - 35 * scale} ${ty - 30 * scale} Q${tx - 20 * scale} ${ty - 42 * scale} ${tx - 5 * scale} ${ty - 32 * scale}`);
+  pen(tG, 0.5).setAttribute('d', `M${tx + 5 * scale} ${ty - 35 * scale} Q${tx + 22 * scale} ${ty - 45 * scale} ${tx + 36 * scale} ${ty - 28 * scale}`);
+  pen(tG, 0.45).setAttribute('d', `M${tx - 22 * scale} ${ty - 12 * scale} Q${tx - 8 * scale} ${ty - 22 * scale} ${tx + 8 * scale} ${ty - 14 * scale}`);
+
+  return { g: tG, tx, ty };
+}
+const treeLeft = drawTree(back, 115, 235, 1.05);
+const treeNearChurch = drawTree(back, 560, 255, 0.95);
+
+// Park Bench near church steps (나무 벤치)
+const benchG = el('g', {}, fore);
+shape(benchG, 1.0).setAttribute('d', 'M505 380 L542 380 L540 383 L507 383Z'); // Seat
+pen(benchG, 0.9).setAttribute('d', 'M506 371 L541 371 M507 375 L540 375');   // Backrest
+pen(benchG, 1.0).setAttribute('d', 'M510 383 L508 396 M537 383 L539 396 M507 371 L509 383 M540 371 L538 383'); // Legs
+
+// ----------------------------------------------------------------------------
+// B. The Church Building (종탑, 십자가, 고딕 스테인드글라스 창문, 현관)
+// ----------------------------------------------------------------------------
+const churchG = el('g', { style: 'cursor: pointer' }, back);
+churchG.setAttribute('id', 'churchGroup');
+
+// 1. Main Sanctuary Body (x: 720 to 928)
+// Foundation stone
+shape(churchG, 1.3).setAttribute('d', `M720 ${GROUND} L932 ${GROUND} L932 250 L720 250Z`);
+// Horizontal siding texture
+for (let y = 260; y < GROUND; y += 12) {
+  pen(churchG, 0.45).setAttribute('d', `M722 ${y} L930 ${y}`);
+}
+// Gable Roof (박공 지붕)
+shape(churchG, 1.4).setAttribute('d', 'M710 252 L826 152 L942 252 L936 258 L826 163 L716 258Z');
+// Ridge cross finial
+pen(churchG, 1.1).setAttribute('d', 'M826 142 L826 153 M822 146 L830 146');
+// Roof shingle lines
+for (let i = 1; i <= 6; i++) {
+  const y = 162 + i * 14;
+  const span = (y - 152) / 100;
+  pen(churchG, 0.4).setAttribute('d', `M${826 - span * 116} ${y} L${826 + span * 116} ${y}`);
+}
+
+// 2. Bell Tower & Steeple (x: 648 to 718)
+// Tower Body
+shape(churchG, 1.4).setAttribute('d', `M650 ${GROUND} L718 ${GROUND} L718 128 L650 128Z`);
+for (let y = 138; y < GROUND; y += 14) {
+  pen(churchG, 0.45).setAttribute('d', `M652 ${y} L716 ${y}`);
+}
+// Belfry Arched Opening (종탑 아치 챔버)
+const belfryArch = shape(churchG, 1.25);
+belfryArch.setAttribute('d', 'M664 186 L664 148 Q684 128 704 148 L704 186Z');
+// Bell yoke (종 매단 보)
+pen(churchG, 1.2).setAttribute('d', 'M660 145 L708 145');
+
+// Bronze Bell (물리적 진자 운동하는 종)
+const bellPivot = el('g', { transform: 'translate(684, 146)' }, churchG);
+const bellShape = paint(bellPivot, '#b45309', 1.1);
+bellShape.setAttribute('d', 'M-7 4 Q-8 15 -13 22 L13 22 Q8 15 7 4 Q4 -1 -7 4Z');
+const clapper = blot(bellPivot);
+clapper.setAttribute('d', 'M-1.5 21 L1.5 21 L1 27 L-1 27Z');
+// Hanging Bell Rope (종 줄)
+const bellRope = pen(churchG, 0.6);
+bellRope.setAttribute('d', 'M684 168 L684 210');
+
+// Steeple Spire (뾰족탑)
+shape(churchG, 1.4).setAttribute('d', 'M646 128 L684 42 L722 128Z');
+// High Cross atop Steeple (정갈한 높은 십자가)
+shape(churchG, 1.3).setAttribute('d', 'M682.5 15 L685.5 15 L685.5 42 L682.5 42Z');
+shape(churchG, 1.3).setAttribute('d', 'M674 23 L694 23 L694 26 L674 26Z');
+
+// Rose Window on Tower (종탑의 둥근 장미창)
+const roseWin = shape(churchG, 0.9);
+roseWin.setAttribute('d', 'M674 220 A10 10 0 1 0 694 220 A10 10 0 1 0 674 220Z');
+pen(churchG, 0.45).setAttribute('d', 'M684 210 L684 230 M674 220 L694 220 M677 213 L691 227 M677 227 L691 213');
+
+// 3. Stained Glass Arched Windows with Muted Colors (3개의 고딕 아치 창문)
+const windowPanes = [];
+const stainedColors = [
+  ['#bfdbfe', '#fde68a', '#fecaca'], // window 1
+  ['#fde68a', '#bbf7d0', '#bfdbfe'], // window 2
+  ['#fecaca', '#bfdbfe', '#fde68a']  // window 3
+];
+
+[755, 812, 870].forEach((wx, wIdx) => {
+  const win = shape(churchG, 1.15);
+  win.setAttribute('d', `M${wx} 342 L${wx} 278 Q${wx + 15} 250 ${wx + 30} 278 L${wx + 30} 342Z`);
+
+  // Stained Glass Panels (부드러운 스테인드글라스 컬러 블록)
+  const cols = stainedColors[wIdx];
+  paint(churchG, cols[0], 0.4).setAttribute('d', `M${wx + 2} 278 Q${wx + 15} 253 ${wx + 28} 278 L${wx + 28} 296 L${wx + 2} 296Z`);
+  paint(churchG, cols[1], 0.4).setAttribute('d', `M${wx + 2} 298 L${wx + 14} 298 L${wx + 14} 340 L${wx + 2} 340Z`);
+  paint(churchG, cols[2], 0.4).setAttribute('d', `M${wx + 16} 298 L${wx + 28} 298 L${wx + 28} 340 L${wx + 16} 340Z`);
+
+  // Mullion grid (창살)
+  pen(churchG, 0.6).setAttribute('d', `M${wx + 15} 253 L${wx + 15} 342 M${wx} 297 L${wx + 30} 297 M${wx} 320 L${wx + 30} 320`);
+
+  // Glow backing for night
+  const wGlow = el('ellipse', { cx: wx + 15, cy: 300, rx: 26, ry: 45, fill: '#ffedd5', opacity: '0' }, glowLayer);
+  windowPanes.push(wGlow);
+});
+
+// 4. Church Porch & Stone Steps (교회 현관)
+shape(churchG, 1.3).setAttribute('d', `M614 ${GROUND} L652 ${GROUND} L652 298 L614 298Z`);
+shape(churchG, 1.3).setAttribute('d', 'M608 298 L633 270 L658 298Z');
+// Open Doorway
+shape(churchG, 1.1).setAttribute('d', 'M622 378 L622 324 Q633 310 644 324 L644 378Z');
+// Warm interior doorway light backing
+const doorGlow = el('circle', { cx: 633, cy: 335, r: 38, fill: '#fef08a', opacity: '0' }, glowLayer);
+
+// Door Lantern
+const lantern = blot(churchG);
+lantern.setAttribute('d', 'M630 304 L636 304 L635 312 L631 312Z');
+
+// Stone Steps (3단 계단)
+for (let s = 0; s < 3; s++) {
+  shape(churchG, 1.0).setAttribute('d', `M${604 - s * 6} ${378 + s * 6} L${656 + s * 3} ${378 + s * 6} L${656 + s * 3} ${384 + s * 6} L${604 - s * 6} ${384 + s * 6}Z`);
+}
+
+// 5. Welcome Signpost (안내 팻말: "주일 예배 11:00")
+const signG = el('g', {}, fore);
+pen(signG, 1.2).setAttribute('d', `M572 ${GROUND} L572 344`);
+shape(signG, 1.05).setAttribute('d', 'M550 344 L594 344 L594 372 L550 372Z');
+pen(signG, 0.7).setAttribute('d', 'M570 348 L574 348 M572 346 L572 354'); // Cross icon
+pen(signG, 0.5).setAttribute('d', 'M556 358 L588 358 M558 365 L586 365'); // Text simulation
+
+// ----------------------------------------------------------------------------
+// C. Sparrows (참새 4마리)
+// ----------------------------------------------------------------------------
+const sparrows = [
+  { x: 674, y: 18, base: [674, 18], state: 'roost', flap: 0, vx: 0, vy: 0 },
+  { x: 712, y: 44, base: [712, 44], state: 'roost', flap: 0, vx: 0, vy: 0 },
+  { x: 780, y: 195, base: [780, 195], state: 'roost', flap: 0, vx: 0, vy: 0 },
+  { x: 840, y: 152, base: [840, 152], state: 'roost', flap: 0, vx: 0, vy: 0 },
+];
+
+const sparrowNodes = sparrows.map(() => {
+  const g = el('g', {}, fore);
+  const body = blot(g);
+  return { g, body };
+});
+
+function scareSparrows() {
+  sparrows.forEach((sp) => {
+    sp.state = 'fly';
+    sp.vx = (Math.random() - 0.5) * 160 - 50;
+    sp.vy = -Math.random() * 140 - 60;
+  });
+}
+
+// ============================================================================
+// 4. The Walkers (성경책을 안은 청년, 어머니와 아이, 장로님)
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// Walker 1: 성경책을 품에 안고 걷는 청년 성도 (Graceful Believer with Bible)
+// ----------------------------------------------------------------------------
+function createBibleBearer(parent) {
+  const fig = el('g', { style: 'cursor: pointer' }, parent);
+  const farArm = limb(fig, 3.5);
+  const legs = [limb(fig, 4.2), limb(fig, 4.2)];
+  const shoes = [blot(fig), blot(fig)];
+  const coat = shape(fig, 1.2);
+  const coatHem = pen(fig, 0.8);
+  const head = el('ellipse', { rx: 3.5, ry: 4.5, fill: PAPER_DAY, stroke: 'currentColor', 'stroke-width': PEN }, fig);
+  head.classList.add('pp');
+  const hair = blot(fig);
+  const nearArm = limb(fig, 3.6);
+  // Bible in arms
+  const bibleG = el('g', {}, fig);
+  const bibleBody = blot(bibleG);
+  const biblePages = shape(bibleG, 0.6);
+  const bibleRibbon = paint(bibleG, '#dc2626', 0.8); // Red bookmark ribbon
+
+  const walk = gait({ kind: 'walk', period: 1.05, stride: 23 });
+  const ribbonSpring = spring(45, 5);
+  let phase = 0, x = 60, bowT = -1;
+
+  fig.addEventListener('pointerdown', () => { if (bowT < 0) bowT = 0; });
+
+  return {
+    fig,
+    step(dt, goSpeed, windVal) {
+      // Bowing greeting
+      let bow = 0;
+      if (bowT >= 0) {
+        bowT += dt;
+        bow = bowT < 0.4 ? (bowT / 0.4) : bowT < 1.1 ? 1 : 1 - ((bowT - 1.1) / 0.4);
+        if (bowT > 1.5) bowT = -1;
+      }
+      const go = 1 - bow * 0.95;
+      phase += (dt / walk.period) * go;
+      x += walk.speed * 0.86 * dt * go;
+      if (x > 595) x = 30; // loop back before reaching church porch
+
+      const p = walk.pose(phase, go);
+      const b = p.bob;
+      place(fig, x, GROUND, 1, 0.86);
+
+      // Legs
+      p.feet.forEach((fo, i) => {
+        legs[i].draw([p.hip, fo.knee, fo.ankle], [0.3, 0.8]);
+        shoe(shoes[i], fo.ankle, fo.pitch);
+      });
+      fig.insertBefore(legs[p.front].g, coat);
+      fig.insertBefore(shoes[p.front], coat);
+
+      // Coat with stride opening
+      const kF = p.feet[p.front].knee, aF = p.feet[p.front].ankle;
+      const sh = [41, 42 + b], hemY = 94;
+      const fx = Math.max(kF[0] + 2.5, 46.5);
+      coat.setAttribute('d', `M${f(sh[0] - 5.5)} ${f(sh[1])} Q${f(sh[0])} ${f(sh[1] - 2)} ${f(sh[0] + 5)} ${f(sh[1])} L${f(fx)} ${f(72 + b)} Q${f(fx + 1)} ${f(84 + b * 0.5)} ${f(Math.max(fx, aF[0] - 2))} ${hemY} L${f(31)} ${hemY} L${f(33.5)} ${f(71 + b)}Z`);
+      coatHem.setAttribute('d', `M${f(sh[0] + 2)} ${f(sh[1] + 3)} L${f(sh[0] + 3.2)} ${f(68 + b)}`);
+
+      // Head & Hair
+      const hc = [42, 32 + b + bow * 4];
+      head.setAttribute('cx', f(hc[0]));
+      head.setAttribute('cy', f(hc[1]));
+      hair.setAttribute('d', `M${f(hc[0] - 4.5)} ${f(hc[1] - 1)} Q${f(hc[0] - 5)} ${f(hc[1] - 6)} ${f(hc[0])} ${f(hc[1] - 6)} Q${f(hc[0] + 5)} ${f(hc[1] - 6)} ${f(hc[0] + 4.5)} ${f(hc[1])} Q${f(hc[0] + 1)} ${f(hc[1] - 3.5)} ${f(hc[0] - 4.5)} ${f(hc[1] - 1)}Z`);
+
+      // Arms: Far arm swings, near arm holds Bible against the chest
+      const legSwing = (p.feet[0].ankle[0] - 40) / (walk.stride / 2);
+      const farA = -legSwing * 18 * go * Math.PI / 180;
+      const shF = [sh[0] - 1, sh[1] + 2];
+      const elbF = [shF[0] + 15 * Math.sin(farA), shF[1] + 15 * Math.cos(farA)];
+      farArm.draw([shF, elbF, [elbF[0] + 14 * Math.sin(farA + 0.2), elbF[1] + 14 * Math.cos(farA + 0.2)]], [0.2, 0.5]);
+
+      // Near arm folded across chest holding the Bible
+      const shN = [sh[0] + 2, sh[1] + 3];
+      const elbN = [shN[0] + 6, shN[1] + 15];
+      const handN = [shN[0] - 1, shN[1] + 12];
+      nearArm.draw([shN, elbN, handN], [0.2, 0.4]);
+
+      // Bible geometry
+      const bx = shN[0] - 2, by = shN[1] + 8;
+      bibleBody.setAttribute('d', `M${f(bx)} ${f(by)} L${f(bx + 11)} ${f(by - 2)} L${f(bx + 11)} ${f(by + 14)} L${f(bx)} ${f(by + 16)}Z`);
+      biblePages.setAttribute('d', `M${f(bx + 2)} ${f(by + 1)} L${f(bx + 10)} ${f(by - 1)} L${f(bx + 10)} ${f(by + 13)} L${f(bx + 2)} ${f(by + 15)}Z`);
+      // Ribbon bookmark flapping in breeze
+      const ribW = ribbonSpring.step(-windVal * 6 - walk.speed * 0.08 * go, dt);
+      bibleRibbon.setAttribute('d', `M${f(bx + 5)} ${f(by + 15)} Q${f(bx + 5 + ribW * 0.5)} ${f(by + 19)} ${f(bx + 4 + ribW)} ${f(by + 24)}`);
+    }
+  };
+}
+
+// ----------------------------------------------------------------------------
+// Walker 2 & 3: 손을 잡고 걷는 어머니와 아이 (Mother & Child)
+// ----------------------------------------------------------------------------
+function createMotherAndChild(parent) {
+  const g = el('g', {}, parent);
+
+  // Mother
+  const mFig = el('g', {}, g);
+  const mFarArm = limb(mFig, 3.4);
+  const mLegs = [limb(mFig, 4.0), limb(mFig, 4.0)];
+  const mShoes = [blot(mFig), blot(mFig)];
+  const mSkirt = shape(mFig, 1.2);
+  const mHead = el('ellipse', { rx: 3.4, ry: 4.4, fill: PAPER_DAY, stroke: 'currentColor', 'stroke-width': PEN }, mFig);
+  mHead.classList.add('pp');
+  const mHair = blot(mFig);
+  const mNearArm = limb(mFig, 3.4);
+
+  // Child
+  const cFig = el('g', {}, g);
+  const cFarArm = limb(cFig, 2.6);
+  const cLegs = [limb(cFig, 3.2), limb(cFig, 3.2)];
+  const cShoes = [blot(cFig), blot(cFig)];
+  const cCoat = shape(cFig, 1.1);
+  const cHead = el('circle', { r: 3.8, fill: PAPER_DAY, stroke: 'currentColor', 'stroke-width': PEN }, cFig);
+  cHead.classList.add('pp');
+  const cBeret = paint(cFig, '#b45309', 1.0);
+  const cNearArm = limb(cFig, 2.6);
+  const cBag = paint(cFig, '#d97706', 0.9);
+
+  const mWalk = gait({ kind: 'walk', period: 1.12, stride: 21 });
+  const cWalk = gait({ kind: 'shuffle', period: 0.62, stride: 15, lift: 4.2 });
+
+  let mPhase = 0.2, cPhase = 0, x = 240;
+
+  return {
+    step(dt, windVal) {
+      mPhase += dt / mWalk.period;
+      cPhase += dt / cWalk.period;
+      x += mWalk.speed * 0.82 * dt;
+      if (x > 575) x = 20;
+
+      // Mother Pose
+      const mp = mWalk.pose(mPhase);
+      place(mFig, x, GROUND, 1, 0.82);
+      mp.feet.forEach((fo, i) => {
+        mLegs[i].draw([mp.hip, fo.knee, fo.ankle], [0.3, 0.8]);
+        shoe(mShoes[i], fo.ankle, fo.pitch);
+      });
+      mFig.insertBefore(mLegs[mp.front].g, mSkirt);
+      mFig.insertBefore(mShoes[mp.front], mSkirt);
+
+      // Long Coat
+      const mSh = [41, 43 + mp.bob], mHemY = 96;
+      const mkF = mp.feet[mp.front].knee;
+      mSkirt.setAttribute('d', `M${f(mSh[0] - 5)} ${f(mSh[1])} L${f(mSh[0] + 5)} ${f(mSh[1])} L${f(Math.max(mkF[0] + 3, 47))} ${mHemY} L${f(31)} ${mHemY}Z`);
+      mHead.setAttribute('cx', f(41.5));
+      mHead.setAttribute('cy', f(33 + mp.bob));
+      mHair.setAttribute('d', `M37 ${f(32 + mp.bob)} Q37 ${f(27 + mp.bob)} 41.5 ${f(27 + mp.bob)} Q46 ${f(27 + mp.bob)} 46 ${f(32 + mp.bob)} Q46 ${f(37 + mp.bob)} 41.5 ${f(35 + mp.bob)}Z`);
+
+      // Mother Arms (Far arm swinging, Near arm holding child's hand)
+      mFarArm.draw([[mSh[0] - 1, mSh[1] + 2], [mSh[0] - 5, mSh[1] + 16], [mSh[0] - 8, mSh[1] + 30]], [0.2, 0.4]);
+      // Holding child's hand forward-down
+      mNearArm.draw([[mSh[0] + 2, mSh[1] + 3], [mSh[0] + 8, mSh[1] + 18], [mSh[0] + 13, mSh[1] + 32]], [0.2, 0.4]);
+
+      // Child Pose (Walking right beside mother, x offset +14)
+      const cp = cWalk.pose(cPhase);
+      place(cFig, x + 15, GROUND, 1, 0.52);
+      cp.feet.forEach((fo, i) => {
+        cLegs[i].draw([cp.hip, fo.knee, fo.ankle], [0.2, 0.6]);
+        shoe(cShoes[i], fo.ankle, fo.pitch);
+      });
+      cFig.insertBefore(cLegs[cp.front].g, cCoat);
+      cFig.insertBefore(cShoes[cp.front], cCoat);
+
+      const cSh = [41, 52 + cp.bob];
+      cCoat.setAttribute('d', `M${f(cSh[0] - 5)} ${f(cSh[1])} L${f(cSh[0] + 5)} ${f(cSh[1])} L${f(cSh[0] + 7)} 92 L${f(cSh[0] - 7)} 92Z`);
+      cHead.setAttribute('cx', f(41));
+      cHead.setAttribute('cy', f(43 + cp.bob));
+      cBeret.setAttribute('d', `M36 ${f(42 + cp.bob)} Q41 ${f(35 + cp.bob)} 47 ${f(41 + cp.bob)} L36 ${f(42 + cp.bob)}Z`);
+
+      // Child holding mother's hand back & small workbook bag
+      cFarArm.draw([[cSh[0] - 2, cSh[1] + 2], [cSh[0] - 8, cSh[1] + 14], [cSh[0] - 12, cSh[1] + 24]], [0.2, 0.4]);
+      cNearArm.draw([[cSh[0] + 2, cSh[1] + 2], [cSh[0] + 6, cSh[1] + 12], [cSh[0] + 10, cSh[1] + 22]], [0.2, 0.4]);
+      cBag.setAttribute('d', `M${f(cSh[0] - 6)} ${f(cSh[1] + 4)} L${f(cSh[0] - 12)} ${f(cSh[1] + 6)} L${f(cSh[0] - 12)} ${f(cSh[1] + 15)} L${f(cSh[0] - 6)} ${f(cSh[1] + 13)}Z`);
+    }
+  };
+}
+
+// ----------------------------------------------------------------------------
+// Walker 4: 단정한 중절모와 성경 손가방을 든 노신사 (The Elder)
+// ----------------------------------------------------------------------------
+function createElder(parent) {
+  const fig = el('g', {}, parent);
+  const farArm = limb(fig, 3.8);
+  const legs = [limb(fig, 4.4), limb(fig, 4.4)];
+  const shoes = [blot(fig), blot(fig)];
+  const coat = shape(fig, 1.3);
+  const head = el('ellipse', { rx: 3.6, ry: 4.6, fill: PAPER_DAY, stroke: 'currentColor', 'stroke-width': PEN }, fig);
+  head.classList.add('pp');
+  const hat = blot(fig);
+  const scarf = paint(fig, '#475569', 0.9);
+  const nearArm = limb(fig, 3.8);
+  const caseG = el('g', {}, fig);
+  const bibleCase = blot(caseG);
+  const caseHandle = pen(caseG, 0.8);
+
+  const walk = gait({ kind: 'walk', period: 1.25, stride: 21 });
+  const caseSwing = pendulum(11, 1.6);
+  let phase = 0.6, x = 390;
+
+  return {
+    step(dt, windVal) {
+      phase += dt / walk.period;
+      x += walk.speed * 0.88 * dt;
+      if (x > 585) x = 40;
+
+      const p = walk.pose(phase);
+      place(fig, x, GROUND, 1, 0.88);
+
+      p.feet.forEach((fo, i) => {
+        legs[i].draw([p.hip, fo.knee, fo.ankle], [0.3, 0.8]);
+        shoe(shoes[i], fo.ankle, fo.pitch);
+      });
+      fig.insertBefore(legs[p.front].g, coat);
+      fig.insertBefore(shoes[p.front], coat);
+
+      const kF = p.feet[p.front].knee;
+      const sh = [41, 41 + p.bob], hemY = 97;
+      coat.setAttribute('d', `M${f(sh[0] - 6)} ${f(sh[1])} L${f(sh[0] + 5)} ${f(sh[1])} L${f(Math.max(kF[0] + 3, 47))} ${hemY} L${f(30)} ${hemY}Z`);
+
+      // Fedora Hat
+      const hc = [42, 31 + p.bob];
+      head.setAttribute('cx', f(hc[0]));
+      head.setAttribute('cy', f(hc[1]));
+      hat.setAttribute('d', `M${f(hc[0] - 7)} ${f(hc[1] - 3)} L${f(hc[0] + 7)} ${f(hc[1] - 3)} Q${f(hc[0] + 4)} ${f(hc[1] - 10)} ${f(hc[0])} ${f(hc[1] - 10)} Q${f(hc[0] - 4)} ${f(hc[1] - 10)} ${f(hc[0] - 7)} ${f(hc[1] - 3)}Z`);
+      scarf.setAttribute('d', `M${f(hc[0] - 4)} ${f(hc[1] + 5)} Q${f(hc[0] + 1)} ${f(hc[1] + 9)} ${f(hc[0] + 5)} ${f(hc[1] + 5)} L${f(hc[0] + 4)} ${f(hc[1] + 8)} Q${f(hc[0])} ${f(hc[1] + 11)} ${f(hc[0] - 4)} ${f(hc[1] + 7)}Z`);
+
+      // Arm & Bible Case Swing
+      const legSwing = (p.feet[0].ankle[0] - 40) / (walk.stride / 2);
+      const nearA = legSwing * 13 * Math.PI / 180;
+      const shN = [sh[0] + 2, sh[1] + 3];
+      const elbN = [shN[0] + 15 * Math.sin(nearA), shN[1] + 15 * Math.cos(nearA)];
+      const handN = [elbN[0] + 15 * Math.sin(nearA + 0.1), elbN[1] + 15 * Math.cos(nearA + 0.1)];
+      nearArm.draw([shN, elbN, handN], [0.2, 0.4]);
+
+      // Bag pendulum swing
+      const ca = caseSwing.step(-nearA * 2.2 - windVal * 0.4, dt);
+      caseG.setAttribute('transform', `rotate(${f(ca * 57.3)} ${pt(handN)})`);
+      caseHandle.setAttribute('d', `M${f(handN[0] - 2.5)} ${f(handN[1] + 2)} Q${pt(handN)} ${f(handN[0] + 2.5)} ${f(handN[1] + 2)}`);
+      bibleCase.setAttribute('d', `M${f(handN[0] - 6.5)} ${f(handN[1] + 3)} L${f(handN[0] + 6.5)} ${f(handN[1] + 3)} L${f(handN[0] + 6.5)} ${f(handN[1] + 14)} L${f(handN[0] - 6.5)} ${f(handN[1] + 14)}Z`);
+    }
+  };
+}
+
+const bibleBearer = createBibleBearer(fore);
+const motherAndChild = createMotherAndChild(fore);
+const elder = createElder(fore);
+
+// ============================================================================
+// 5. Interaction & Main Animation Loop
+// ============================================================================
+
+const q = new URLSearchParams(location.search);
+let tau = q.has('start') ? parseFloat(q.get('start')) : (q.has('tau') ? parseFloat(q.get('tau')) : 0.33);
+let dayDuration = q.has('day') ? parseFloat(q.get('day')) : 24;
+let isAutoCycle = q.has('day') || q.has('cycle');
+let isRunning = true;
+let wind = 0.2, windTarget = 0.2, lastPointerX = null, lastPointerT = 0;
+let bellSwing = pendulum(18, 1.2);
+let bellImpulse = 0;
+
+// Pointer wind interaction
+svg.addEventListener('pointermove', (e) => {
+  const now = performance.now();
+  if (lastPointerX !== null) {
+    const dx = e.clientX - lastPointerX;
+    const dt = Math.max(8, now - lastPointerT);
+    windTarget = clamp(windTarget + (dx / dt) * 0.6, -2.5, 2.5);
+  }
+  lastPointerX = e.clientX;
+  lastPointerT = now;
+});
+
+// Click church steeple to toll the bell
+churchG.addEventListener('pointerdown', (e) => {
+  e.stopPropagation();
+  triggerBell();
+});
+
+window.__triggerBell = triggerBell;
+if (location.search.includes('capture')) {
+  document.body.classList.add('capture');
+}
+
+document.querySelector('#btnChime').addEventListener('click', triggerBell);
+
+function triggerBell() {
+  bellImpulse = 14;
+  playChurchBell();
+  scareSparrows();
+}
+
+// Time Display Helper
+const timeLabel = document.querySelector('#timeLabel');
+const timeSlider = document.querySelector('#timeSlider');
+
+function updateTimeDisplay(t) {
+  const h = Math.floor(t * 24);
+  const m = Math.floor((t * 24 - h) * 60);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const displayH = h % 12 || 12;
+  const timeStr = `${String(displayH).padStart(2, '0')}:${String(m).padStart(2, '0')} ${ampm}`;
+  let sub = '묵상과 평안';
+  if (t >= 0.20 && t < 0.28) sub = '새벽 기도';
+  else if (t >= 0.28 && t < 0.40) sub = '주일 1부 예배';
+  else if (t >= 0.40 && t < 0.55) sub = '주일 2부 예배';
+  else if (t >= 0.55 && t < 0.72) sub = '오후 성도의 교제';
+  else if (t >= 0.72 && t < 0.82) sub = '저녁 찬양과 기도';
+  else sub = '고요한 밤 별빛';
+  timeLabel.textContent = `${timeStr} · ${sub}`;
+}
+
+// Time Buttons
+const timeButtons = [
+  { btn: document.querySelector('#btnDawn'), tau: 0.23 },
+  { btn: document.querySelector('#btnMorning'), tau: 0.33 },
+  { btn: document.querySelector('#btnNoon'), tau: 0.48 },
+  { btn: document.querySelector('#btnDusk'), tau: 0.76 },
+];
+
+timeButtons.forEach(({ btn, tau: tVal }) => {
+  btn.addEventListener('click', () => {
+    isAutoCycle = false;
+    btnAutoCycle.classList.remove('active');
+    timeButtons.forEach(b => b.btn.classList.remove('active'));
+    btn.classList.add('active');
+    tau = tVal;
+    timeSlider.value = tau;
+    updateTimeDisplay(tau);
+  });
+});
+
+const btnAutoCycle = document.querySelector('#btnAutoCycle');
+if (isAutoCycle) btnAutoCycle.classList.add('active');
+btnAutoCycle.addEventListener('click', () => {
+  isAutoCycle = !isAutoCycle;
+  btnAutoCycle.classList.toggle('active', isAutoCycle);
+  timeButtons.forEach(b => b.btn.classList.remove('active'));
+});
+
+timeSlider.addEventListener('input', (e) => {
+  isAutoCycle = false;
+  btnAutoCycle.classList.remove('active');
+  tau = parseFloat(e.target.value);
+  timeButtons.forEach(b => b.btn.classList.remove('active'));
+  updateTimeDisplay(tau);
+});
+
+// Play/Pause
+const btnPlayPause = document.querySelector('#btnPlayPause');
+btnPlayPause.addEventListener('click', () => {
+  isRunning = !isRunning;
+  btnPlayPause.textContent = isRunning ? '⏸️ 일시정지' : '▶️ 재생';
+});
+
+// Sparrows update
+function updateSparrows(dt) {
+  sparrows.forEach((sp, i) => {
+    const node = sparrowNodes[i];
+    if (sp.state === 'fly') {
+      sp.flap += dt * 32;
+      sp.x += sp.vx * dt;
+      sp.y += sp.vy * dt;
+      sp.vy += 70 * dt;
+      const dx = sp.base[0] - sp.x, dy = sp.base[1] - sp.y;
+      sp.vx += dx * 0.9 * dt;
+      sp.vy += dy * 0.9 * dt;
+
+      if (Math.hypot(dx, dy) < 8 && Math.abs(sp.vy) < 20) {
+        sp.state = 'roost';
+        sp.x = sp.base[0];
+        sp.y = sp.base[1];
+      }
+      const wing = Math.sin(sp.flap) * 3;
+      node.body.setAttribute('d', `M-3 0 L3 0 L1 ${f(wing)} L-1 ${f(wing)}Z`);
+      node.g.setAttribute('transform', `translate(${f(sp.x)} ${f(sp.y)})`);
+    } else {
+      node.body.setAttribute('d', 'M-2 1 Q0 -2 2 1 Q1 3 -2 1Z');
+      node.g.setAttribute('transform', `translate(${f(sp.x)} ${f(sp.y)})`);
+    }
+  });
+}
+
+// ----------------------------------------------------------------------------
+// Main Loop & Step Logic
+// ----------------------------------------------------------------------------
+let lastTime = performance.now();
+let simTime = 0;
+const isDebug = location.search.includes('debug');
+
+function step(dt) {
+  simTime += dt;
+  // Advance time if auto-cycle is enabled
+  if (isAutoCycle) {
+    tau = (tau + dt / dayDuration) % 1;
+    timeSlider.value = tau;
+    updateTimeDisplay(tau);
+  }
+
+  // Wind dampening
+  wind += (windTarget - wind) * dt * 3;
+  windTarget *= Math.exp(-dt * 0.8);
+
+  // Apply Palette
+  const pal = getPalette(tau);
+  skyStopTop.setAttribute('stop-color', rgb(pal.top));
+  skyStopBottom.setAttribute('stop-color', rgb(pal.bottom));
+  svg.style.color = rgb(pal.ink);
+  svg.style.setProperty('--paper', rgb(pal.paper));
+
+  // Sun and Moon positioning
+  if (pal.isNight) {
+    sunG.setAttribute('opacity', '0');
+    moonG.setAttribute('opacity', f(pal.windowLamp));
+    starsG.setAttribute('opacity', f(pal.windowLamp * 0.9));
+    starNodes.forEach((sn, idx) => {
+      sn.setAttribute('r', f(1.1 + Math.sin(simTime * 3.2 + idx * 1.5) * 0.5));
+    });
+  } else {
+    moonG.setAttribute('opacity', '0');
+    starsG.setAttribute('opacity', '0');
+    const u = clamp((tau - 0.20) / 0.56, 0, 1);
+    const sunX = 70 + u * 800;
+    const sunY = 240 - Math.sin(u * Math.PI) * 160;
+    sunG.setAttribute('opacity', f(Math.sin(u * Math.PI) * 0.95));
+    sunDisk.setAttribute('cx', f(sunX));
+    sunDisk.setAttribute('cy', f(sunY));
+  }
+
+  // Stained glass and doorway warm interior glow
+  windowPanes.forEach((w) => w.setAttribute('opacity', f(pal.windowLamp * 0.75)));
+  doorGlow.setAttribute('opacity', f(pal.windowLamp * 0.65));
+
+  // Bell swing physics
+  const bellAngle = bellSwing.step(bellImpulse, dt);
+  bellImpulse *= Math.exp(-dt * 4);
+  bellPivot.setAttribute('transform', `translate(684, 146) rotate(${f(bellAngle * 57.3)})`);
+
+  // Step Walkers
+  bibleBearer.step(dt, 1, wind);
+  motherAndChild.step(dt, wind);
+  elder.step(dt, wind);
+
+  // Step Sparrows
+  updateSparrows(dt);
+}
+
+window.__step = step;
+
+function frame(now) {
+  const dt = Math.min((now - lastTime) / 1000, 0.05);
+  lastTime = now;
+
+  if (isRunning) {
+    step(dt);
+  }
+
+  if (!isDebug) {
+    requestAnimationFrame(frame);
+  }
+}
+
+if (!isDebug) {
+  requestAnimationFrame(frame);
+} else {
+  step(1 / 60);
+}
+</script>
+
+</body>
+</html>
