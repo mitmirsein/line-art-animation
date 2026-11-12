@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>엠마오 도상의 동행 (The Road to Emmaus) - 라인아트 애니메이션</title>
+  <style>
+    :root {
+      --bg: #f5f2eb;
+      --surface: #ffffff;
+      --border: #e2ddd3;
+      --text: #262421;
+      --muted: #6e695e;
+      --accent: #b45309;
+      --navy: #1e293b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 20px;
+    }
+
+    .editorial-wrapper {
+      width: 100%;
+      max-width: 920px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Header */
+    .doc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 14px;
+      gap: 16px;
+    }
+
+    .doc-kicker {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 4px;
+      letter-spacing: 0.03em;
+    }
+
+    .doc-title {
+      font-family: "Merriweather", "Noto Serif KR", Georgia, serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.3;
+      text-wrap: balance;
+    }
+
+    .doc-subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 6px;
+      line-height: 1.5;
+      max-width: 68ch;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fdf6ec;
+      border: 1px solid #fbd38d;
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #975a16;
+      white-space: nowrap;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #dd6b20;
+      box-shadow: 0 0 6px rgba(221, 107, 32, 0.4);
+    }
+
+    /* Stage Card */
+    .stage-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
+
+    #stage {
+      width: 100%;
+      aspect-ratio: 2 / 1;
+      display: block;
+      cursor: crosshair;
+      user-select: none;
+      touch-action: none;
+      background-color: #faf7f0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    svg.emmaus-stage {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Controls Panel */
+    .control-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    .control-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    button.btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #334155;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    button.btn:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+      color: #0f172a;
+    }
+
+    button.btn.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #ffffff;
+    }
+
+    button.btn-accent {
+      background: #c2410c;
+      border-color: #9a3412;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    button.btn-accent:hover {
+      background: #9a3412;
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 140px;
+      height: 4px;
+      background: #cbd5e1;
+      border-radius: 2px;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: 1px solid #ffffff;
+    }
+
+    /* Scripture Callout Card */
+    .meditation-card {
+      background: #fffdf9;
+      border: 1px solid #fed7aa;
+      border-radius: 6px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .meditation-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #c2410c;
+      letter-spacing: 0.04em;
+    }
+
+    .meditation-verse {
+      font-family: "Merriweather", "Noto Serif KR", Georgia, serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #431407;
+      word-break: keep-all;
+    }
+
+    .meditation-ref {
+      font-size: 12px;
+      color: #9a3412;
+      font-weight: 600;
+    }
+
+    /* Footer Notes */
+    .doc-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 0 4px;
+      line-height: 1.5;
+    }
+
+    .chip {
+      background: #e2e8f0;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      color: #475569;
+    }
+
+    /* Video Capture Mode for Headless Recording */
+    body.capture {
+      padding: 32px 40px;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--bg);
+    }
+    body.capture .control-panel,
+    body.capture .doc-footer,
+    body.capture .meditation-card {
+      display: none !important;
+    }
+    body.capture .editorial-wrapper {
+      max-width: 1540px;
+      width: 86vw;
+    }
+    body.capture .doc-title {
+      font-size: 28px;
+    }
+    body.capture .doc-subtitle {
+      font-size: 16px;
+    }
+    body.capture .time-badge {
+      font-size: 15px;
+      padding: 6px 14px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="editorial-wrapper">
+  <header class="doc-header">
+    <div class="title-block">
+      <div class="doc-kicker">BIBLICAL LINE-ART ANIMATION · LUKE 24:13–35</div>
+      <h1 class="doc-title">엠마오 도상의 동행</h1>
+      <p class="doc-subtitle">석양이 지는 유대 광야 들길에서 세 사람이 성경을 풀며 나란히 걷는 황혼의 라인아트 애니메이션</p>
+    </div>
+    <div class="time-badge">
+      <span class="badge-dot"></span>
+      <span id="timeLabel">06:00 PM · 타오르는 석양과 말씀</span>
+    </div>
+  </header>
+
+  <div class="stage-card">
+    <div id="stage"></div>
+  </div>
+
+  <div class="control-panel">
+    <div class="control-row">
+      <div class="btn-group">
+        <button class="btn btn-accent" id="btnPlayPause">⏸️ 일시정지</button>
+        <button class="btn active" id="btnSunset">🌇 엠마오의 석양</button>
+        <button class="btn" id="btnGoldAfternoon">🌅 황금빛 오후</button>
+        <button class="btn" id="btnTwilight">🌆 황혼의 여운</button>
+        <button class="btn" id="btnNight">🌌 고요한 밤</button>
+        <button class="btn" id="btnAutoCycle">🔄 24시간 순환</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn" id="btnScripture">📖 말씀 묵상</button>
+        <button class="btn" id="btnAudioToggle">🔊 바람 소리</button>
+      </div>
+    </div>
+    <div class="control-row">
+      <div class="slider-container">
+        <span>시간대 조절</span>
+        <input type="range" id="timeSlider" min="0" max="1" step="0.005" value="0.72">
+      </div>
+      <div class="btn-group">
+        <span class="chip">마우스 이동: 석양의 바람 조절</span>
+        <span class="chip">인물 클릭: 성경 강론 인터랙션</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="meditation-card" id="meditationCard">
+    <div class="meditation-label">묵상 구절 (SCRIPTURE MEDITATION)</div>
+    <div class="meditation-verse" id="verseText">
+      "그들이 서로 말하되 길에서 우리에게 말씀하시고 우리에게 성경을 풀어 주실 때에 우리 속에서 마음이 뜨겁지 아니하더냐 하고"
+    </div>
+    <div class="meditation-ref" id="verseRef">누가복음 24장 32절</div>
+  </div>
+
+  <footer class="doc-footer">
+    <span>역운동학(IK) 3인 보행 · 스프링 올리브 고목 물리 · Web Audio 음향</span>
+    <span>순수 DOM/SVG 무의존성 엔진</span>
+  </footer>
+</div>
+
+<script>
+// ============================================================================
+// 1. Math, Spring Physics, & SVG Helpers
+// ============================================================================
+const f = (n) => Number(n.toFixed(2));
+const pt = ([x, y]) => `${f(x)} ${f(y)}`;
+const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+
+const el = (tag, attrs = {}, parent = null) => {
+  const elem = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [k, v] of Object.entries(attrs)) elem.setAttribute(k, String(v));
+  if (parent) parent.appendChild(elem);
+  return elem;
+};
+
+const stroke = (parent, d, width = 1.35, cap = 'round') =>
+  el('path', { d, fill: 'none', stroke: 'currentColor', 'stroke-width': String(width), 'stroke-linecap': cap, 'stroke-linejoin': 'round' }, parent);
+
+const paint = (parent, fill, opacity = 1) =>
+  el('path', { fill, opacity: String(opacity) }, parent);
+
+function spring(k = 40, c = 6) {
+  let val = 0, vel = 0;
+  return {
+    step(target, dt) {
+      dt = Math.min(dt, 0.05);
+      const force = -k * (val - target) - c * vel;
+      vel += force * dt;
+      val += vel * dt;
+      return val;
+    },
+    get val() { return val; },
+    set(v) { val = v; vel = 0; }
+  };
+}
+
+function pendulum(w = 12, gamma = 1.6) {
+  let angle = 0, vel = 0;
+  return {
+    step(drive, dt) {
+      dt = Math.min(dt, 0.05);
+      const force = -w * Math.sin(angle) - gamma * vel + drive;
+      vel += force * dt;
+      angle += vel * dt;
+      return angle;
+    },
+    get angle() { return angle; }
+  };
+}
+
+function limb(parent, width = 1.4) {
+  const g = el('g', {}, parent);
+  const pA = stroke(g, '', width);
+  const pB = stroke(g, '', width * 0.9);
+  return {
+    g,
+    draw([hip, knee, ankle], [gap0 = 0.25, gap1 = 0.65] = []) {
+      const v0 = [knee[0] - hip[0], knee[1] - hip[1]];
+      const l0 = Math.hypot(v0[0], v0[1]) || 1;
+      const n0 = [-v0[1] / l0, v0[0] / l0];
+
+      const v1 = [ankle[0] - knee[0], ankle[1] - knee[1]];
+      const l1 = Math.hypot(v1[0], v1[1]) || 1;
+      const n1 = [-v1[1] / l1, v1[0] / l1];
+
+      const thW = 2.4, shW = 1.8;
+      const t0L = [hip[0] + n0[0] * thW, hip[1] + n0[1] * thW];
+      const t0R = [hip[0] - n0[0] * thW, hip[1] - n0[1] * thW];
+      const kL = [knee[0] + n0[0] * shW, knee[1] + n0[1] * shW];
+      const kR = [knee[0] - n0[0] * shW, knee[1] - n0[1] * shW];
+      const aL = [ankle[0] + n1[0] * 1.2, ankle[1] + n1[1] * 1.2];
+      const aR = [ankle[0] - n1[0] * 1.2, ankle[1] - n1[1] * 1.2];
+
+      pA.setAttribute('d', `M${pt(t0L)} Q${pt(kL)} ${pt(aL)}`);
+      pB.setAttribute('d', `M${pt(t0R)} Q${pt(kR)} ${pt(aR)}`);
+    }
+  };
+}
+
+const place = (g, x, y, dir = 1, s = 0.5) =>
+  g.setAttribute('transform', `translate(${f(x)} ${f(y)}) scale(${f(dir * s)} ${f(s)}) translate(-40 -120)`);
+
+// ----------------------------------------------------------------------------
+// 2. Day/Night & Sunset Palette Ramps
+// ----------------------------------------------------------------------------
+const toRGB = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const rgb = (c) => `rgb(${Math.round(c[0])},${Math.round(c[1])},${Math.round(c[2])})`;
+const mixRGB = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+
+const SKY_RAMP = [
+  [0.00, '#0c1322', '#1a2240'], // Midnight
+  [0.22, '#2d3356', '#d9977a'], // Dawn
+  [0.45, '#eef2f5', '#faf5eb'], // Midday
+  [0.65, '#f59e0b', '#fef3c7'], // Golden Afternoon (엠마오 길 16:30)
+  [0.72, '#9a3412', '#f97316'], // Radiant Sunset (석양 18:00)
+  [0.77, '#312e81', '#c2410c'], // Twilight Dusk (황혼 19:15)
+  [0.85, '#090d16', '#1e1b4b']  // Starlit Night (밤 21:00)
+];
+
+function getPalette(tau) {
+  tau = ((tau % 1) + 1) % 1;
+  let idx = 0;
+  for (let i = 0; i < SKY_RAMP.length; i++) {
+    if (SKY_RAMP[i][0] <= tau) idx = i;
+  }
+  const nextIdx = (idx + 1) % SKY_RAMP.length;
+  const p0 = SKY_RAMP[idx], p1 = SKY_RAMP[nextIdx];
+  const span = (p1[0] > p0[0] ? p1[0] : p1[0] + 1) - p0[0];
+  const t = (tau < p0[0] ? tau + 1 - p0[0] : tau - p0[0]) / span;
+
+  const top = mixRGB(toRGB(p0[1]), toRGB(p1[1]), t);
+  const bottom = mixRGB(toRGB(p0[2]), toRGB(p1[2]), t);
+
+  const isNight = tau < 0.20 || tau > 0.80;
+  const isSunset = tau >= 0.62 && tau <= 0.80;
+  const sunsetFactor = clamp(1 - Math.abs(tau - 0.72) / 0.08, 0, 1);
+  const nightFactor = isNight ? (tau < 0.20 ? 1 - tau / 0.20 : (tau - 0.80) / 0.20) : 0;
+
+  const paper = isNight ? mixRGB(toRGB('#181f33'), toRGB('#242942'), 0.5) : toRGB('#faf7f0');
+  const ink = isNight ? toRGB('#e2e8f0') : (isSunset ? mixRGB(toRGB('#1c1917'), toRGB('#3b1a10'), sunsetFactor) : toRGB('#1c1917'));
+
+  return { top, bottom, paper, ink, isNight, isSunset, sunsetFactor, nightFactor };
+}
+
+// ----------------------------------------------------------------------------
+// 3. Inverse Kinematics Gait Solver
+// ----------------------------------------------------------------------------
+function gait(opts = {}) {
+  const period = opts.period || 1.15;
+  const duty = opts.duty || 0.62;
+  const stride = opts.stride || 24;
+  const lift = opts.lift || 3.8;
+  const heelOff = opts.heelOff || 18;
+  const thigh = opts.thigh || 20;
+  const shin = opts.shin || 20;
+  const ground = opts.ground || 120;
+  const toe = opts.toe || 5.2;
+
+  const speed = stride / (duty * period);
+
+  function solveLeg(aX, aY, standY) {
+    const hipX = 40, hipY = standY - (thigh + shin);
+    const dx = aX - hipX, dy = aY - hipY;
+    const d = Math.min(Math.hypot(dx, dy), thigh + shin - 0.05);
+    const th = Math.atan2(dy, dx);
+    const al = Math.acos(Math.max(-1, Math.min(1, (thigh * thigh + d * d - shin * shin) / (2 * thigh * d))));
+    return [hipX + thigh * Math.cos(th + al), hipY + thigh * Math.sin(th + al)];
+  }
+
+  return {
+    period, speed, stride, duty,
+    pose(phase) {
+      phase = ((phase % 1) + 1) % 1;
+      const feet = [0, 1].map((i) => {
+        const ph = ((phase + i * 0.5) % 1);
+        let x, y, pitch = 0, stance = false;
+        if (ph < duty) {
+          stance = true;
+          const u = ph / duty;
+          x = 40 + stride * 0.5 - u * stride;
+          y = ground;
+          if (u > (1 - heelOff / 100)) {
+            const hU = (u - (1 - heelOff / 100)) / (heelOff / 100);
+            pitch = hU * 22 * (Math.PI / 180);
+            y -= Math.sin(pitch) * toe * 0.4;
+          }
+        } else {
+          const u = (ph - duty) / (1 - duty);
+          const tX = 40 - stride * 0.5 + u * stride;
+          const arc = Math.sin(u * Math.PI);
+          x = tX;
+          y = ground - arc * lift * 3.5;
+          pitch = (1 - u) * 12 * (Math.PI / 180);
+        }
+        return { ankle: [x, y], pitch, stance, knee: [0, 0] };
+      });
+
+      const stY = feet.map((fo) => fo.stance ? fo.ankle[1] : ground);
+      const lowestStance = Math.min(...stY);
+      const bob = Math.sin(phase * Math.PI * 2) * 1.8;
+      const standY = lowestStance + bob;
+
+      feet.forEach((fo) => {
+        fo.knee = solveLeg(fo.ankle[0], fo.ankle[1], standY);
+      });
+
+      const hip = [40, standY - (thigh + shin)];
+      const front = feet[0].ankle[0] > feet[1].ankle[0] ? 0 : 1;
+      return { hip, feet, front, bob };
+    }
+  };
+}
+
+// ----------------------------------------------------------------------------
+// 4. Web Audio Synthesizer (Zero Dependencies)
+// ----------------------------------------------------------------------------
+let audioCtx = null;
+let windNoiseNode = null;
+let windGainNode = null;
+let isAudioActive = false;
+
+function initAudio() {
+  if (audioCtx) return;
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    // Warm evening wind buffer (pink noise filter)
+    const bufSize = audioCtx.sampleRate * 2;
+    const noiseBuf = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
+    const output = noiseBuf.getChannelData(0);
+    let b0 = 0, b1 = 0, b2 = 0;
+    for (let i = 0; i < bufSize; i++) {
+      const white = Math.random() * 2 - 1;
+      b0 = 0.99765 * b0 + white * 0.0555179;
+      b1 = 0.96300 * b1 + white * 0.0750759;
+      b2 = 0.57000 * b2 + white * 0.1538520;
+      output[i] = (b0 + b1 + b2) * 0.12;
+    }
+
+    const whiteNoise = audioCtx.createBufferSource();
+    whiteNoise.buffer = noiseBuf;
+    whiteNoise.loop = true;
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(380, audioCtx.currentTime);
+
+    windGainNode = audioCtx.createGain();
+    windGainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+
+    whiteNoise.connect(filter);
+    filter.connect(windGainNode);
+    windGainNode.connect(audioCtx.destination);
+    whiteNoise.start();
+    windNoiseNode = whiteNoise;
+  } catch (e) {
+    console.warn('AudioContext failed:', e);
+  }
+}
+
+function playKinnorChime() {
+  if (!audioCtx) initAudio();
+  if (!audioCtx) return;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+
+  // Contemplative Judean Kinnor harp chord (D3, A3, D4, F4)
+  const notes = [146.83, 220.00, 293.66, 349.23];
+  const t = audioCtx.currentTime;
+
+  notes.forEach((freq, idx) => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, t + idx * 0.09);
+
+    gain.gain.setValueAtTime(0, t + idx * 0.09);
+    gain.gain.linearRampToValueAtTime(0.18, t + idx * 0.09 + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + idx * 0.09 + 2.8);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(t + idx * 0.09);
+    osc.stop(t + idx * 0.09 + 3.0);
+  });
+}
+
+// ----------------------------------------------------------------------------
+// 5. Scene Construction (Landscape, Hills, Olive Trees, 3 Figures)
+// ----------------------------------------------------------------------------
+const W = 960, H = 480, GROUND = 398;
+const stageContainer = document.querySelector('#stage');
+const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, class: 'emmaus-stage', role: 'img' });
+stageContainer.appendChild(svg);
+
+// Ink Filter with fine displacement
+const defs = el('defs', {}, svg);
+const inkFilter = el('filter', { id: 'ink', x: '-10%', y: '-10%', width: '120%', height: '120%' }, defs);
+el('feTurbulence', { type: 'fractalNoise', baseFrequency: '0.038', numOctaves: '2', result: 'turb' }, inkFilter);
+el('feDisplacementMap', { in: 'SourceGraphic', in2: 'turb', scale: '0.75', xChannelSelector: 'R', yChannelSelector: 'G' }, inkFilter);
+
+// Sky Gradient
+const skyGrad = el('linearGradient', { id: 'skyGrad', x1: '0', y1: '0', x2: '0', y2: '1' }, defs);
+const skyStopTop = el('stop', { offset: '0%' }, skyGrad);
+const skyStopBottom = el('stop', { offset: '100%' }, skyGrad);
+const skyRect = el('rect', { width: W, height: H, fill: 'url(#skyGrad)' }, svg);
+
+// Scene Layer Groups
+const sceneG = el('g', { filter: 'url(#ink)' }, svg);
+const backLayer = el('g', {}, sceneG);
+const midLayer = el('g', {}, sceneG);
+const foreLayer = el('g', {}, sceneG);
+const glowLayer = el('g', { style: 'mix-blend-mode: screen; pointer-events: none;' }, svg);
+
+// --- A. Celestial Objects (Sun, Moon, Stars) ---
+const sunG = el('g', { opacity: '0.9' }, backLayer);
+const sunHalo = el('circle', { cx: '270', cy: '215', r: '48', fill: '#fef08a', opacity: '0.35' }, sunG);
+const sunDisk = el('circle', { cx: '270', cy: '215', r: '28', fill: '#fef08a', stroke: 'currentColor', 'stroke-width': '0.8', opacity: '0.92' }, sunG);
+
+// Crescent Moon & Twilight Stars
+const moonG = el('g', { opacity: '0' }, backLayer);
+const moon = paint(moonG, '#fef9c3', 0.85);
+moon.setAttribute('d', 'M710 65 Q728 84 710 106 Q736 94 734 72 Q726 63 710 65Z');
+
+const starsG = el('g', { opacity: '0' }, backLayer);
+const starCoords = [
+  [80, 50], [150, 75], [230, 40], [330, 85], [420, 48],
+  [510, 72], [620, 38], [760, 55], [840, 80], [890, 42]
+];
+const starNodes = starCoords.map(([sx, sy]) => el('circle', { cx: String(sx), cy: String(sy), r: '1.4', fill: '#fef08a' }, starsG));
+
+// --- B. Judean Hills & Emmaus Village Silhouette ---
+// Distant Rolling Ridges
+const farHills = paint(backLayer, 'currentColor', 0.08);
+farHills.setAttribute('d', 'M0 260 Q180 230 360 255 T720 240 Q840 225 960 250 L960 480 L0 480Z');
+
+// Mid Ridge with terraced stone walls
+const midRidge = stroke(midLayer, 'M0 310 Q240 285 480 305 Q680 295 960 320', 1.0);
+const midRidgeFill = paint(midLayer, 'var(--paper, #faf7f0)', 0.95);
+midRidgeFill.setAttribute('d', 'M0 310 Q240 285 480 305 Q680 295 960 320 L960 480 L0 480Z');
+
+// Emmaus Hilltop Village (Right background x: 760 ~ 890, y: 260 ~ 300)
+const emmausVillageG = el('g', {}, midLayer);
+// Low cubical stone houses with terrace arches
+const villageD = [
+  'M780 295 L780 278 L802 278 L802 295',
+  'M804 295 L804 272 L828 272 L828 295',
+  'M830 295 L830 276 L852 276 L852 295',
+  'M854 295 L854 270 L876 270 L876 295',
+  'M812 272 L812 265 L822 265 L822 272', // Watchtower
+  'M776 295 L884 295'                     // Stone base
+].join(' ');
+stroke(emmausVillageG, villageD, 0.85);
+
+// Village Windows with warm lanterns at dusk
+const villageWindows = [
+  el('rect', { x: '788', y: '282', width: '3', height: '4', fill: '#f59e0b', opacity: '0' }, glowLayer),
+  el('rect', { x: '812', y: '277', width: '4', height: '5', fill: '#f59e0b', opacity: '0' }, glowLayer),
+  el('rect', { x: '838', y: '281', width: '3', height: '4', fill: '#f59e0b', opacity: '0' }, glowLayer),
+  el('rect', { x: '862', y: '276', width: '3', height: '4', fill: '#f59e0b', opacity: '0' }, glowLayer),
+];
+
+// Gentle chimney smoke rising
+const smokePath = stroke(midLayer, 'M818 265 Q822 250 816 238 Q810 226 816 215', 0.65);
+smokePath.setAttribute('stroke-dasharray', '2 3');
+
+// --- C. Ancient Olive Trees (올리브 고목 & 스프링 바람 반응) ---
+function createOliveTree(parent, baseX, baseY, scale = 1.0) {
+  const g = el('g', { transform: `translate(${baseX} ${baseY}) scale(${scale})` }, parent);
+  const foliageBack = el('g', {}, g);
+  const trunkG = el('g', {}, g);
+  const branchesG = el('g', {}, g);
+
+  // Gnarled twisted split trunk (올리브 고목 특유의 갈라진 밑동과 옹이)
+  const trunkD = `
+    M-22 0 Q-18 -36 -26 -70 Q-22 -105 -8 -135
+    Q-4 -155 -22 -185 L-10 -185
+    Q-2 -155 4 -130 Q16 -160 10 -195 L22 -195
+    Q24 -155 16 -125 Q28 -90 22 -55 Q26 -25 22 0
+    M-12 0 Q-8 -50 -5 -90 Q-2 -120 12 -150
+    M-4 -35 Q-1 -70 5 -100
+    M-16 -80 Q-10 -105 -12 -125
+    M14 -70 Q10 -95 12 -115
+  `;
+  stroke(trunkG, trunkD, 1.45);
+
+  // Foliage clusters with solid paper backing and organic contour
+  const canopies = [
+    { cx: -65, cy: -195, d: 'M-120 -195 Q-105 -235 -65 -225 Q-25 -240 5 -205 Q-10 -175 -55 -170 Q-105 -172 -120 -195Z' },
+    { cx: 35, cy: -205, d: 'M-15 -205 Q15 -245 60 -230 Q105 -240 120 -205 Q105 -170 60 -172 Q5 -170 -15 -205Z' },
+    { cx: -15, cy: -245, d: 'M-60 -245 Q-40 -275 -15 -270 Q15 -275 38 -245 Q20 -220 -15 -218 Q-50 -220 -60 -245Z' },
+    { cx: -95, cy: -165, d: 'M-130 -165 Q-115 -190 -90 -185 Q-65 -190 -55 -165 Q-70 -148 -95 -148 Q-120 -148 -130 -165Z' },
+    { cx: 85, cy: -175, d: 'M50 -175 Q68 -200 95 -195 Q120 -200 130 -175 Q115 -155 90 -155 Q65 -155 50 -175Z' }
+  ];
+
+  canopies.forEach((c) => {
+    paint(foliageBack, 'var(--paper, #faf7f0)', 0.94).setAttribute('d', c.d);
+    stroke(branchesG, c.d, 1.1);
+    stroke(branchesG, `M${c.cx - 24} ${c.cy} Q${c.cx} ${c.cy - 10} ${c.cx + 24} ${c.cy}`, 0.65);
+    stroke(branchesG, `M${c.cx - 16} ${c.cy + 7} Q${c.cx} ${c.cy} ${c.cx + 16} ${c.cy + 7}`, 0.65);
+    stroke(branchesG, `M${c.cx - 10} ${c.cy - 7} Q${c.cx} ${c.cy - 14} ${c.cx + 10} ${c.cy - 7}`, 0.6);
+  });
+
+  const boughPendulum = pendulum(10, 1.4);
+
+  return {
+    step(dt, windVal) {
+      const angle = boughPendulum.step(windVal * 1.8, dt);
+      const swayTransform = `rotate(${f(angle * 57.3)} 0 -130) skewX(${f(angle * 18)})`;
+      branchesG.setAttribute('transform', swayTransform);
+      foliageBack.setAttribute('transform', swayTransform);
+    }
+  };
+}
+
+const mainOliveTree = createOliveTree(foreLayer, 750, GROUND, 0.98);
+const secondaryOliveTree = createOliveTree(midLayer, 130, GROUND - 5, 0.65);
+
+// --- D. Country Road & Roadside Flora ---
+// Winding dirt and stone trail
+const roadPath = stroke(foreLayer, `M0 ${GROUND} Q240 ${GROUND - 6} 480 ${GROUND} Q720 ${GROUND + 4} 960 ${GROUND}`, 1.2);
+const roadBase = paint(foreLayer, 'var(--paper, #faf7f0)', 1);
+roadBase.setAttribute('d', `M0 ${GROUND} Q240 ${GROUND - 6} 480 ${GROUND} Q720 ${GROUND + 4} 960 ${GROUND} L960 480 L0 480Z`);
+
+// Irregular trail stones
+const stones = [
+  'M90 415 Q105 412 118 416 Q108 420 90 415',
+  'M210 422 Q225 418 238 423 Q220 426 210 422',
+  'M390 418 Q410 414 425 419 Q405 423 390 418',
+  'M580 424 Q600 420 615 425 Q595 428 580 424',
+  'M810 417 Q828 413 840 418 Q825 422 810 417'
+].join(' ');
+stroke(foreLayer, stones, 0.85);
+
+// Ancient Milestone (Emmaus 60 Stadia / 엠마오 표지석)
+const milestoneG = el('g', { transform: `translate(890 ${GROUND})` }, foreLayer);
+stroke(milestoneG, 'M-9 0 L-9 -34 Q-9 -42 0 -42 Q9 -42 9 -34 L9 0', 1.2);
+stroke(milestoneG, 'M-5 -26 L5 -26', 0.6);
+stroke(milestoneG, 'M-4 -20 L4 -20', 0.6);
+stroke(milestoneG, 'M-5 -14 L5 -14', 0.6);
+
+// Swaying roadside wheat and desert thistles
+const grassNodes = [];
+for (let gx = 15; gx < W; gx += 45) {
+  const gh = 18 + (gx % 13);
+  const gp = stroke(foreLayer, `M${gx} ${GROUND + 2} Q${gx + 4} ${GROUND - gh * 0.5} ${gx} ${GROUND - gh}`, 0.8);
+  grassNodes.push({ path: gp, base: gx, h: gh, phase: gx * 0.05 });
+}
+
+// Drifting leaves / dust motes
+const leafNodes = Array.from({ length: 8 }, (_, i) => {
+  const p = stroke(foreLayer, 'M-3 0 Q0 -2 3 0 Q0 2 -3 0', 0.7);
+  return { path: p, x: Math.random() * W, y: 180 + Math.random() * 200, vx: 30 + Math.random() * 40, vy: -5 + Math.random() * 10, rot: 0 };
+});
+
+// ============================================================================
+// 6. The Three Figures on the Road to Emmaus (세 사람)
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// Figure 1 (Center): The Risen Christ (부활하신 예수님)
+// - Tall, noble stride, walking staff in left hand, teaching right hand gesture
+// - Flowing biblical seamless tunic & mantle fluttering in evening breeze
+// ----------------------------------------------------------------------------
+function createChrist(parent) {
+  const fig = el('g', {}, parent);
+  const legs = [limb(fig, 1.4), limb(fig, 1.4)];
+  const tunic = stroke(fig, '', 1.35);
+  const mantle = stroke(fig, '', 1.25);
+  const head = el('circle', { r: '6.4', fill: 'var(--paper, #faf7f0)', stroke: 'currentColor', 'stroke-width': '1.35' }, fig);
+  const headCover = stroke(fig, '', 1.2);
+  const staff = stroke(fig, '', 1.35);
+  const armL = stroke(fig, '', 1.35);
+  const armR = stroke(fig, '', 1.35);
+
+  const walk = gait({ period: 1.18, stride: 24, lift: 3.8 });
+  const mantleSpring = spring(34, 5.2);
+  const teachSpring = spring(22, 4.5);
+  let phase = 0.0, x = 380;
+  let isExplaining = 0;
+
+  return {
+    fig,
+    triggerTalk() {
+      isExplaining = 1.0;
+      setTimeout(() => { isExplaining = 0; }, 3500);
+    },
+    step(dt, windVal) {
+      phase += dt / walk.period;
+      x += walk.speed * 0.95 * dt;
+      if (x > W + 90) x = -90;
+
+      const p = walk.pose(phase);
+      place(fig, x, GROUND, 1, 0.65);
+
+      p.feet.forEach((fo, i) => {
+        legs[i].draw([p.hip, fo.knee, fo.ankle]);
+      });
+      fig.insertBefore(legs[p.front].g, tunic);
+
+      const kF = p.feet[p.front].knee;
+      const fF = p.feet[p.front].ankle;
+      const fB = p.feet[1 - p.front].ankle;
+      const sh = [40, 42 + p.bob];
+
+      // Flowing Biblical Tunic
+      const hemY = 114;
+      const trail = mantleSpring.step(-windVal * 16, dt);
+      tunic.setAttribute('d', `
+        M${f(sh[0] - 5)} ${f(sh[1])}
+        L${f(sh[0] + 5)} ${f(sh[1])}
+        Q${f(kF[0] + 4)} ${f(hemY - 14)} ${f(fF[0] + 2)} ${hemY}
+        L${f(fB[0] - 6 + trail * 0.4)} ${hemY}
+        Q${f(30 + trail * 0.6)} ${f(hemY - 24)} ${f(sh[0] - 5)} ${f(sh[1])}Z
+      `);
+
+      // Mantle drape billowing backwards
+      mantle.setAttribute('d', `
+        M${f(sh[0] - 4)} ${f(sh[1] + 4)}
+        Q${f(22 + trail)} ${f(sh[1] + 28)} ${f(16 + trail * 1.2)} ${f(hemY - 6)}
+        Q${f(28 + trail * 0.6)} ${f(hemY - 18)} ${f(sh[0] + 2)} ${f(sh[1] + 16)}
+      `);
+
+      // Head & Headdress
+      const hc = [40, 31 + p.bob];
+      head.setAttribute('cx', f(hc[0]));
+      head.setAttribute('cy', f(hc[1]));
+      headCover.setAttribute('d', `
+        M${f(hc[0] - 6)} ${f(hc[1] - 2)}
+        Q${f(hc[0])} ${f(hc[1] - 10)} ${f(hc[0] + 6)} ${f(hc[1] - 2)}
+        Q${f(hc[0] + 7)} ${f(hc[1] + 10)} ${f(hc[0] - 2)} ${f(hc[1] + 13)}
+        Q${f(hc[0] - 8 + trail * 0.3)} ${f(hc[1] + 8)} ${f(hc[0] - 6)} ${f(hc[1] - 2)}Z
+      `);
+
+      // Left Hand: Holding Shepherd's Walking Staff planted rhythmically
+      const staffPhase = Math.sin(phase * Math.PI * 2);
+      const handL = [sh[0] - 10, sh[1] + 18];
+      armL.setAttribute('d', `M${f(sh[0] - 4)} ${f(sh[1] + 3)} Q${f(handL[0] - 3)} ${f(handL[1] - 6)} ${pt(handL)}`);
+      // Staff extends from above hand to ground
+      const staffAngle = staffPhase * 0.12;
+      staff.setAttribute('d', `
+        M${f(handL[0] - Math.sin(staffAngle) * 36)} ${f(handL[1] - Math.cos(staffAngle) * 36)}
+        L${f(handL[0] + Math.sin(staffAngle) * 58)} ${f(handL[1] + Math.cos(staffAngle) * 58)}
+      `);
+
+      // Right Hand: Teaching / Exposition gesture ("마음이 뜨겁지 아니하더냐")
+      const talkMod = teachSpring.step(isExplaining * 1.5 + Math.sin(phase * Math.PI) * 0.3, dt);
+      const handR = [sh[0] + 14 + talkMod * 6, sh[1] + 8 - talkMod * 12];
+      const elbR = [sh[0] + 8, sh[1] + 14];
+      armR.setAttribute('d', `M${f(sh[0] + 4)} ${f(sh[1] + 3)} Q${pt(elbR)} ${pt(handR)}`);
+    }
+  };
+}
+
+// ----------------------------------------------------------------------------
+// Figure 2 (Left): Cleopas (글로바)
+// - Traveler's hood, satchel at hip, leaning forward attentively, asking questions
+// ----------------------------------------------------------------------------
+function createCleopas(parent) {
+  const fig = el('g', {}, parent);
+  const legs = [limb(fig, 1.35), limb(fig, 1.35)];
+  const tunic = stroke(fig, '', 1.3);
+  const bag = stroke(fig, '', 1.2);
+  const head = el('circle', { r: '6.0', fill: 'var(--paper, #faf7f0)', stroke: 'currentColor', 'stroke-width': '1.3' }, fig);
+  const hood = stroke(fig, '', 1.2);
+  const armNear = stroke(fig, '', 1.3);
+  const armFar = stroke(fig, '', 1.2);
+
+  const walk = gait({ period: 1.12, stride: 23, lift: 3.5 });
+  const cloakSpring = spring(32, 5.0);
+  let phase = 0.35, x = 285;
+
+  return {
+    fig,
+    step(dt, windVal) {
+      phase += dt / walk.period;
+      x += walk.speed * 0.95 * dt;
+      if (x > W + 90) x = -90;
+
+      const p = walk.pose(phase);
+      place(fig, x, GROUND, 1, 0.61);
+
+      p.feet.forEach((fo, i) => {
+        legs[i].draw([p.hip, fo.knee, fo.ankle]);
+      });
+      fig.insertBefore(legs[p.front].g, tunic);
+
+      const kF = p.feet[p.front].knee;
+      const fF = p.feet[p.front].ankle;
+      const fB = p.feet[1 - p.front].ankle;
+      const sh = [39, 44 + p.bob];
+      const hemY = 112;
+      const trail = cloakSpring.step(-windVal * 14, dt);
+
+      // Traveler's Tunic with slight forward lean
+      tunic.setAttribute('d', `
+        M${f(sh[0] - 5)} ${f(sh[1])}
+        L${f(sh[0] + 6)} ${f(sh[1])}
+        Q${f(kF[0] + 5)} ${f(hemY - 12)} ${f(fF[0] + 3)} ${hemY}
+        L${f(fB[0] - 5 + trail * 0.4)} ${hemY}
+        Q${f(28 + trail * 0.5)} ${f(hemY - 20)} ${f(sh[0] - 5)} ${f(sh[1])}Z
+      `);
+
+      // Satchel Bag across chest
+      bag.setAttribute('d', `
+        M${f(sh[0] - 3)} ${f(sh[1] + 2)}
+        L${f(sh[0] + 8)} ${f(sh[1] + 26)}
+        L${f(sh[0] + 16)} ${f(sh[1] + 24)}
+        L${f(sh[0] + 15)} ${f(sh[1] + 34)}
+        L${f(sh[0] + 5)} ${f(sh[1] + 36)}
+        Z
+      `);
+
+      // Head with Traveler's Hood leaning forward
+      const hc = [41, 33 + p.bob];
+      head.setAttribute('cx', f(hc[0]));
+      head.setAttribute('cy', f(hc[1]));
+      hood.setAttribute('d', `
+        M${f(hc[0] - 6)} ${f(hc[1] - 1)}
+        Q${f(hc[0] + 2)} ${f(hc[1] - 9)} ${f(hc[0] + 7)} ${f(hc[1] - 1)}
+        Q${f(hc[0] + 7)} ${f(hc[1] + 10)} ${f(hc[0] - 1)} ${f(hc[1] + 13)}
+        Q${f(hc[0] - 7 + trail * 0.3)} ${f(hc[1] + 7)} ${f(hc[0] - 6)} ${f(hc[1] - 1)}Z
+      `);
+
+      // Gesture: Far arm forward asking questions, near arm swinging
+      const legSwing = (p.feet[0].ankle[0] - 40) / (walk.stride / 2);
+      armNear.setAttribute('d', `M${f(sh[0] + 3)} ${f(sh[1] + 4)} Q${f(sh[0] + 8 + legSwing * 6)} ${f(sh[1] + 18)} ${f(sh[0] + 12 + legSwing * 10)} ${f(sh[1] + 24)}`);
+      armFar.setAttribute('d', `M${f(sh[0] - 2)} ${f(sh[1] + 3)} Q${f(sh[0] + 14)} ${f(sh[1] + 14)} ${f(sh[0] + 22)} ${f(sh[1] + 12)}`);
+    }
+  };
+}
+
+// ----------------------------------------------------------------------------
+// Figure 3 (Right): The Companion Disciple (동행한 다른 제자)
+// - Walking staff, hand to chest in wonder ("Did our heart not burn within us?")
+// ----------------------------------------------------------------------------
+function createCompanion(parent) {
+  const fig = el('g', {}, parent);
+  const legs = [limb(fig, 1.35), limb(fig, 1.35)];
+  const tunic = stroke(fig, '', 1.3);
+  const head = el('circle', { r: '5.8', fill: 'var(--paper, #faf7f0)', stroke: 'currentColor', 'stroke-width': '1.3' }, fig);
+  const headdress = stroke(fig, '', 1.2);
+  const staff = stroke(fig, '', 1.3);
+  const armStaff = stroke(fig, '', 1.3);
+  const armChest = stroke(fig, '', 1.3);
+
+  const walk = gait({ period: 1.22, stride: 22, lift: 3.4 });
+  const mantleSpring = spring(32, 5.0);
+  let phase = 0.70, x = 470;
+
+  return {
+    fig,
+    step(dt, windVal) {
+      phase += dt / walk.period;
+      x += walk.speed * 0.95 * dt;
+      if (x > W + 90) x = -90;
+
+      const p = walk.pose(phase);
+      place(fig, x, GROUND, 1, 0.60);
+
+      p.feet.forEach((fo, i) => {
+        legs[i].draw([p.hip, fo.knee, fo.ankle]);
+      });
+      fig.insertBefore(legs[p.front].g, tunic);
+
+      const kF = p.feet[p.front].knee;
+      const fF = p.feet[p.front].ankle;
+      const fB = p.feet[1 - p.front].ankle;
+      const sh = [39, 44 + p.bob];
+      const hemY = 112;
+      const trail = mantleSpring.step(-windVal * 12, dt);
+
+      // Tunic
+      tunic.setAttribute('d', `
+        M${f(sh[0] - 5)} ${f(sh[1])}
+        L${f(sh[0] + 5)} ${f(sh[1])}
+        Q${f(kF[0] + 4)} ${f(hemY - 12)} ${f(fF[0] + 2)} ${hemY}
+        L${f(fB[0] - 5 + trail * 0.3)} ${hemY}
+        Q${f(28 + trail * 0.5)} ${f(hemY - 20)} ${f(sh[0] - 5)} ${f(sh[1])}Z
+      `);
+
+      // Head turned slightly back toward Christ
+      const hc = [38, 33 + p.bob];
+      head.setAttribute('cx', f(hc[0]));
+      head.setAttribute('cy', f(hc[1]));
+      headdress.setAttribute('d', `
+        M${f(hc[0] - 6)} ${f(hc[1] - 1)}
+        Q${f(hc[0])} ${f(hc[1] - 8)} ${f(hc[0] + 6)} ${f(hc[1] - 1)}
+        Q${f(hc[0] + 6)} ${f(hc[1] + 9)} ${f(hc[0] - 1)} ${f(hc[1] + 12)}
+        Q${f(hc[0] - 6 + trail * 0.2)} ${f(hc[1] + 7)} ${f(hc[0] - 6)} ${f(hc[1] - 1)}Z
+      `);
+
+      // Right Hand: Walking Staff
+      const handS = [sh[0] + 14, sh[1] + 20];
+      armStaff.setAttribute('d', `M${f(sh[0] + 4)} ${f(sh[1] + 4)} Q${f(handS[0] - 2)} ${f(handS[1] - 4)} ${pt(handS)}`);
+      staff.setAttribute('d', `M${f(handS[0] - 4)} ${f(handS[1] - 38)} L${f(handS[0] + 6)} ${f(handS[1] + 56)}`);
+
+      // Left Hand: Clasping chest in heart-burning realization
+      armChest.setAttribute('d', `M${f(sh[0] - 3)} ${f(sh[1] + 4)} Q${f(sh[0] - 8)} ${f(sh[1] + 14)} ${f(sh[0] + 2)} ${f(sh[1] + 16)}`);
+    }
+  };
+}
+
+const cleopas = createCleopas(foreLayer);
+const christ = createChrist(foreLayer);
+const companion = createCompanion(foreLayer);
+
+// Make figures clickable to trigger conversation / chime
+[christ.fig, cleopas.fig, companion.fig].forEach((elem) => {
+  elem.style.cursor = 'pointer';
+  elem.addEventListener('pointerdown', (e) => {
+    e.stopPropagation();
+    christ.triggerTalk();
+    playKinnorChime();
+  });
+});
+
+// ============================================================================
+// 7. Interaction, Wind, & Main Animation Loop
+// ============================================================================
+const q = new URLSearchParams(location.search);
+let tau = q.has('start') ? parseFloat(q.get('start')) : (q.has('tau') ? parseFloat(q.get('tau')) : 0.72);
+let dayDuration = q.has('day') ? parseFloat(q.get('day')) : 24;
+let isAutoCycle = q.has('day') || q.has('cycle');
+let isRunning = true;
+let wind = 0.3, windTarget = 0.3, lastPointerX = null, lastPointerT = 0;
+
+// Pointer wind interaction
+svg.addEventListener('pointermove', (e) => {
+  const now = performance.now();
+  if (lastPointerX !== null) {
+    const dx = e.clientX - lastPointerX;
+    const dt = Math.max(8, now - lastPointerT);
+    windTarget = clamp(windTarget + (dx / dt) * 0.7, -3.0, 3.0);
+  }
+  lastPointerX = e.clientX;
+  lastPointerT = now;
+});
+
+// Time Display Helper
+const timeLabel = document.querySelector('#timeLabel');
+const timeSlider = document.querySelector('#timeSlider');
+
+function updateTimeDisplay(t) {
+  const h = Math.floor(t * 24);
+  const m = Math.floor((t * 24 - h) * 60);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const displayH = h % 12 || 12;
+  const timeStr = `${String(displayH).padStart(2, '0')}:${String(m).padStart(2, '0')} ${ampm}`;
+  let sub = '묵상과 평안';
+  if (t >= 0.58 && t < 0.68) sub = '황금빛 늦은 오후의 동행';
+  else if (t >= 0.68 && t < 0.76) sub = '타오르는 석양과 말씀';
+  else if (t >= 0.76 && t < 0.83) sub = '황혼의 여운과 저녁 식사';
+  else if (t >= 0.83 || t < 0.20) sub = '눈이 밝아져 주를 알아본 밤';
+  else sub = '새 아침을 향한 발걸음';
+  timeLabel.textContent = `${timeStr} · ${sub}`;
+}
+
+// Preset Buttons
+const timeButtons = [
+  { btn: document.querySelector('#btnSunset'), tau: 0.72 },
+  { btn: document.querySelector('#btnGoldAfternoon'), tau: 0.64 },
+  { btn: document.querySelector('#btnTwilight'), tau: 0.78 },
+  { btn: document.querySelector('#btnNight'), tau: 0.88 },
+];
+
+timeButtons.forEach(({ btn, tau: tVal }) => {
+  btn.addEventListener('click', () => {
+    isAutoCycle = false;
+    btnAutoCycle.classList.remove('active');
+    timeButtons.forEach((b) => b.btn.classList.remove('active'));
+    btn.classList.add('active');
+    tau = tVal;
+    timeSlider.value = tau;
+    updateTimeDisplay(tau);
+  });
+});
+
+const btnAutoCycle = document.querySelector('#btnAutoCycle');
+if (isAutoCycle) btnAutoCycle.classList.add('active');
+btnAutoCycle.addEventListener('click', () => {
+  isAutoCycle = !isAutoCycle;
+  btnAutoCycle.classList.toggle('active', isAutoCycle);
+  timeButtons.forEach((b) => b.btn.classList.remove('active'));
+});
+
+timeSlider.addEventListener('input', (e) => {
+  isAutoCycle = false;
+  btnAutoCycle.classList.remove('active');
+  tau = parseFloat(e.target.value);
+  timeButtons.forEach((b) => b.btn.classList.remove('active'));
+  updateTimeDisplay(tau);
+});
+
+// Play/Pause
+const btnPlayPause = document.querySelector('#btnPlayPause');
+btnPlayPause.addEventListener('click', () => {
+  isRunning = !isRunning;
+  btnPlayPause.textContent = isRunning ? '⏸️ 일시정지' : '▶️ 재생';
+});
+
+// Scripture Verse Toggle
+const btnScripture = document.querySelector('#btnScripture');
+const verses = [
+  { text: '"그들이 서로 말하되 길에서 우리에게 말씀하시고 우리에게 성경을 풀어 주실 때에 우리 속에서 마음이 뜨겁지 아니하더냐 하고"', ref: '누가복음 24장 32절' },
+  { text: '"그들과 함께 음식 잡수실 때에 떡을 가지사 축사하시고 떼어 그들에게 주시니 그들의 눈이 밝아져 그인 줄 알아보더니"', ref: '누가복음 24장 30–31절' },
+  { text: '"그들이 강권하여 이르되 우리와 함께 유하사이다 때가 저물어가고 날이 이미 기울었나이다 하니"', ref: '누가복음 24장 29절' },
+  { text: '"이에 모세와 모든 선지자의 글로 시작하여 모든 성경에 쓴 바 자기에 관한 것을 자세히 설명하시니라"', ref: '누가복음 24장 27절' }
+];
+let vIdx = 0;
+btnScripture.addEventListener('click', () => {
+  vIdx = (vIdx + 1) % verses.length;
+  document.querySelector('#verseText').textContent = verses[vIdx].text;
+  document.querySelector('#verseRef').textContent = verses[vIdx].ref;
+  christ.triggerTalk();
+  playKinnorChime();
+});
+
+// Audio Toggle Button
+const btnAudioToggle = document.querySelector('#btnAudioToggle');
+btnAudioToggle.addEventListener('click', () => {
+  initAudio();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  isAudioActive = !isAudioActive;
+  btnAudioToggle.textContent = isAudioActive ? '🔊 바람 소리 켜짐' : '🔇 바람 소리 끔';
+  btnAudioToggle.classList.toggle('active', isAudioActive);
+});
+
+// Video Capture Mode Setup
+if (location.search.includes('capture')) {
+  document.body.classList.add('capture');
+}
+
+// ----------------------------------------------------------------------------
+// 8. Main Step Function & Render Loop
+// ----------------------------------------------------------------------------
+let lastTime = performance.now();
+let simTime = 0;
+const isDebug = location.search.includes('debug');
+
+function step(dt) {
+  simTime += dt;
+  if (isAutoCycle) {
+    tau = (tau + dt / dayDuration) % 1;
+    timeSlider.value = tau;
+    updateTimeDisplay(tau);
+  }
+
+  // Wind dampening
+  wind += (windTarget - wind) * dt * 3;
+  windTarget *= Math.exp(-dt * 0.8);
+
+  // Audio Wind Volume Update
+  if (isAudioActive && windGainNode) {
+    const targetGain = clamp(0.04 + Math.abs(wind) * 0.08, 0.02, 0.22);
+    windGainNode.gain.setValueAtTime(targetGain, audioCtx.currentTime);
+  }
+
+  // Apply Palette
+  const pal = getPalette(tau);
+  skyStopTop.setAttribute('stop-color', rgb(pal.top));
+  skyStopBottom.setAttribute('stop-color', rgb(pal.bottom));
+  svg.style.color = rgb(pal.ink);
+  svg.style.setProperty('--paper', rgb(pal.paper));
+
+  // Sun and Moon Celestial Motion
+  if (pal.isNight) {
+    sunG.setAttribute('opacity', '0');
+    moonG.setAttribute('opacity', f(pal.nightFactor));
+    starsG.setAttribute('opacity', f(pal.nightFactor * 0.95));
+    starNodes.forEach((sn, idx) => {
+      sn.setAttribute('r', f(1.1 + Math.sin(simTime * 3.2 + idx * 1.5) * 0.5));
+    });
+  } else {
+    moonG.setAttribute('opacity', '0');
+    starsG.setAttribute('opacity', '0');
+    const u = clamp((tau - 0.22) / 0.58, 0, 1);
+    const sunX = 140 + u * 680;
+    const sunY = 280 - Math.sin(u * Math.PI) * 190;
+    const sunOpacity = Math.sin(u * Math.PI) * (pal.isSunset ? 1.0 : 0.85);
+    sunG.setAttribute('opacity', f(sunOpacity));
+    sunDisk.setAttribute('cx', f(sunX));
+    sunDisk.setAttribute('cy', f(sunY));
+    sunHalo.setAttribute('cx', f(sunX));
+    sunHalo.setAttribute('cy', f(sunY));
+    sunHalo.setAttribute('r', f(35 + pal.sunsetFactor * 25));
+  }
+
+  // Village Lanterns at Dusk & Night
+  const lampOpacity = pal.isNight ? 0.85 : (pal.isSunset ? pal.sunsetFactor * 0.75 : 0);
+  villageWindows.forEach((w) => w.setAttribute('opacity', f(lampOpacity)));
+
+  // Step Olive Trees
+  mainOliveTree.step(dt, wind);
+  secondaryOliveTree.step(dt, wind * 0.7);
+
+  // Step Grasses in Wind
+  grassNodes.forEach((gn) => {
+    const sway = Math.sin(simTime * 4 + gn.phase) * (3 + Math.abs(wind) * 7);
+    gn.path.setAttribute('d', `M${gn.base} ${GROUND + 2} Q${gn.base + sway * 0.6} ${GROUND - gn.h * 0.5} ${gn.base + sway} ${GROUND - gn.h}`);
+  });
+
+  // Step Drifting Leaves & Dust Motes
+  leafNodes.forEach((lf) => {
+    lf.x += (lf.vx + wind * 40) * dt;
+    lf.y += Math.sin(simTime * 2 + lf.x * 0.05) * 15 * dt;
+    lf.rot += (120 + wind * 80) * dt;
+    if (lf.x > W + 20) lf.x = -20;
+    if (lf.x < -20) lf.x = W + 20;
+    lf.path.setAttribute('transform', `translate(${f(lf.x)} ${f(lf.y)}) rotate(${f(lf.rot)})`);
+  });
+
+  // Step The Three Walkers
+  christ.step(dt, wind);
+  cleopas.step(dt, wind);
+  companion.step(dt, wind);
+}
+
+window.__step = step;
+window.__triggerTalk = () => { christ.triggerTalk(); playKinnorChime(); };
+
+function frame(now) {
+  const dt = Math.min((now - lastTime) / 1000, 0.05);
+  lastTime = now;
+  if (isRunning) step(dt);
+  if (!isDebug) requestAnimationFrame(frame);
+}
+
+if (!isDebug) {
+  requestAnimationFrame(frame);
+} else {
+  step(1 / 60);
+}
+</script>
+
+</body>
+</html>
